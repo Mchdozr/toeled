@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Toeled</title>
+  <meta name="description" content="Toeled">
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --fg: #f4f6f8;
+      --muted: #9aa3b2;
+      --accent: #f46f2c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 80% -10%, #1a1512 0%, var(--bg) 55%);
+      color: var(--fg);
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+    }
+    main { max-width: 40rem; text-align: center; }
+    h1 { font-size: clamp(2rem, 6vw, 3.25rem); letter-spacing: -0.04em; margin-bottom: 0.75rem; }
+    p { color: var(--muted); font-size: 1.05rem; line-height: 1.6; }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); display: inline-block; margin-right: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Toeled</h1>
+    <p><span class="dot"></span>Site kurulumu hazır. Natro Plesk Git ile <code>main</code> push canlıya yansır.</p>
+  </main>
+</body>
+</html>
