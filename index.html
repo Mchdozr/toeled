@@ -4,37 +4,57 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Toeled</title>
-  <meta name="description" content="Toeled">
-  <style>
-    :root {
-      --bg: #0b0d10;
-      --fg: #f4f6f8;
-      --muted: #9aa3b2;
-      --accent: #f46f2c;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      min-height: 100vh;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      background: radial-gradient(1200px 600px at 80% -10%, #1a1512 0%, var(--bg) 55%);
-      color: var(--fg);
-      display: grid;
-      place-items: center;
-      padding: 2rem;
-    }
-    main { max-width: 40rem; text-align: center; }
-    h1 { font-size: clamp(2rem, 6vw, 3.25rem); letter-spacing: -0.04em; margin-bottom: 0.75rem; }
-    p { color: var(--muted); font-size: 1.05rem; line-height: 1.6; }
-    .dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--accent); display: inline-block; margin-right: 0.4rem;
-    }
-  </style>
+  <meta name="description" content="Toeled — LED ekran ve dijital görüntü çözümleri.">
+  <link rel="canonical" href="https://toeled.com/">
+  <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-  <main>
-    <h1>Toeled</h1>
-    <p><span class="dot"></span>Site kurulumu hazır. Natro Plesk Git ile <code>main</code> push canlıya yansır.</p>
-  </main>
+  <header>
+    <div class="wrap">
+      <a class="logo" href="/">toe<span>led</span></a>
+      <nav>
+        <a href="#cozumler">Çözümler</a>
+        <a href="#iletisim">İletişim</a>
+      </nav>
+      <a class="cta" href="#iletisim">İletişime geç</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>LED ekranda net, hızlı, ölçülebilir sonuç.</h1>
+      <p>Toeled, iç ve dış mekân LED ekran projelerinde satış, kiralama ve saha operasyonunu tek çatı altında toplar.</p>
+      <div class="actions">
+        <a class="cta" href="#iletisim">Teklif alın</a>
+        <a class="ghost" href="#cozumler">Çözümler</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="cozumler" class="wrap grid">
+    <article class="card">
+      <h2>Satış</h2>
+      <p>Sabit kurulum LED ekran, kontrol sistemi ve keşif sonrası doğru pixel pitch seçimi.</p>
+    </article>
+    <article class="card">
+      <h2>Kiralama</h2>
+      <p>Etkinlik, lansman ve sahne işleri için saha ekibiyle birlikte kiralık LED çözümleri.</p>
+    </article>
+    <article class="card">
+      <h2>Operasyon</h2>
+      <p>Kurulum, yayın, yedek parça ve yayın sonrası söküm — tek muhatap.</p>
+    </article>
+  </section>
+
+  <section id="iletisim" class="contact">
+    <div class="wrap">
+      <h2>İletişim</h2>
+      <p>Proje için <a href="mailto:info@toeled.com">info@toeled.com</a> üzerinden yazın.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">© 2026 Toeled · toeled.com</div>
+  </footer>
 </body>
 </html>
