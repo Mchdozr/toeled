@@ -1,0 +1,272 @@
+@charset 'utf-8';
+/* CSS Document */
+
+@media (min-width: 1230px)
+{
+    .container
+    {
+        width: 1230px;
+    }
+}
+.ib
+{
+    display: inline-block;
+
+    vertical-align: middle;
+}
+.imgdiv img,
+.tra0_3,
+.imgk img
+{
+    -webkit-transition: all .3s ease-out 0s;
+       -moz-transition: all .3s ease-out 0s;
+        -ms-transition: all .3s ease-out 0s;
+         -o-transition: all .3s ease-out 0s;
+            transition: all .3s ease-out 0s;
+}
+.tra1
+{
+    -webkit-transition: all 1s ease-out 0s;
+       -moz-transition: all 1s ease-out 0s;
+        -ms-transition: all 1s ease-out 0s;
+         -o-transition: all 1s ease-out 0s;
+            transition: all 1s ease-out 0s;
+}
+.dimgdiv img:last-of-type
+{
+    display: none;
+}
+.dimgdiv:hover img:first-of-type
+{
+    display: none;
+}
+.dimgdiv:hover img:last-of-type
+{
+    display: inline;
+}
+.disnone
+{
+    display: none !important;
+}
+.clearfix::after
+{
+    display: block;
+    clear: both;
+
+    height: 0;
+
+    content: ' ';
+}
+.clearfix
+{
+    zoom: 1;
+}
+.cp
+{
+    cursor: pointer;
+}
+.fb
+{
+    font-weight: bold;
+}
+.fl
+{
+    float: left;
+}
+.fr
+{
+    float: right;
+}
+.l,
+.r
+{
+    width: 50%;
+}
+.c_333
+{
+    color: #333;
+}
+.c_666
+{
+    color: #666;
+}
+.c_999
+{
+    color: #999;
+}
+.c_w
+{
+    color: #fff;
+}
+.bg_w
+{
+    background: #fff;
+}
+.c_b
+{
+    color: #000;
+}
+.bg_b
+{
+    background: #000;
+}
+.img_d
+{
+    display: none;
+}
+.img_dd
+{
+    display: none !important;
+}
+.hm
+{
+    height: 100%;
+}
+.tn
+{
+    -webkit-transform: none;
+       -moz-transform: none;
+        -ms-transform: none;
+         -o-transform: none;
+            transform: none;
+}
+.t50
+{
+    -webkit-transform: translate(-50%,-50%);
+       -moz-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+         -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+}
+.tx50
+{
+    -webkit-transform: translateX(-50%);
+       -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+         -o-transform: translateX(-50%);
+            transform: translateX(-50%);
+}
+.ty50
+{
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%);
+}
+.tac
+{
+    text-align: center;
+}
+.tal
+{
+    text-align: left;
+}
+.tar
+{
+    text-align: right;
+}
+.tablediv
+{
+    display: table;
+}
+.tr
+{
+    display: table-row;
+}
+.td
+{
+    display: table-cell;
+}
+.imgdiv
+{
+    overflow: hidden;
+}
+/* v1.4 2019.6.28  gary*/
+/*slick 修整*/
+.slick-track .slick-slide{
+    display: block !important;
+}
+/*分享修改*/
+.bsBox, #bsPanel div, #bsMorePanel div, #bshareF div {
+    box-sizing: content-box;
+}
+.bsTop span{
+    line-height: 24px !important;
+}
+#bsPanel{
+    margin-left: 20px !important;
+}
+/*编辑器图片和p默认样式处理*/
+.yxedr_active img{
+    max-width: 100% !important;
+    height: auto !important;
+}
+.yxedr_active video{
+    max-width: 100% !important;
+    height: auto !important;
+    width:100% !important;
+}
+.yxedr_active p{
+    font-size: 16px;
+    line-height: 1.75;
+    color: #666;
+}
+.g_tableboxn {
+    width: 100%;
+    overflow-x: auto;
+}
+.g_tableboxn .g_tablebox {
+    width: 1200px;
+}
+/* 列表 */
+.yx_list li {
+    list-style: inherit;
+}
+
+.yx_list {
+    padding-left: 20px;
+}
+/*ie默认样式去除*/
+select::-ms-expand { 
+    display: none; 
+} 
+/*2021.03.24英文站微信分享*/
+#bsWXBox .bsTop span{
+    opacity: 0;
+}
+#bsWXBox .bsTop{
+    position: relative;
+}
+#bsWXBox .bsTop:after{
+    content: '- 微信';
+    display: block;
+    position: absolute;
+    left: 85px;
+    top: 50%;
+    font-size: 14px;
+    transform: translateY(-50%);
+}
+#bsWXBox .bsTop:before{
+    content: '分享到';
+    display: block;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    font-size: 14px;
+    transform: translateY(-50%);
+}
+
+@media screen and (max-width: 767px) {
+    .yxedr_active audio,
+    .yxedr_active iframe {
+        max-height: 260px;
+    }
+}
+.yx_content{
+    width:1200px;
+    margin:auto;
+}
+.yxedr_active iframe{
+    width: 100%;
+}
