@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /debugger/
+Disallow: /one-click-debug/
+Disallow: /tools/
 
 Sitemap: https://toeled.com/sitemap.xml
