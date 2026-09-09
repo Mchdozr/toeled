@@ -5,6 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CSS = (ROOT / "public/wwwroot/css/motion.css").read_text(encoding="utf-8")
+HOME = (ROOT / "index.html").read_text(encoding="utf-8")
 PAGES = tuple(ROOT.rglob("index.html"))
 
 
@@ -23,6 +24,32 @@ class LayoutContractTests(unittest.TestCase):
         self.assertIn(".home-model2 .model2-left .t1", CSS)
         self.assertIn(".home-model2 .model2-top .tab-item-btn", CSS)
         self.assertIn("min-height: 44px", CSS)
+
+    def test_home_model2_top_uses_icon_chips(self):
+        self.assertIn(".home-model2 .model2-top .tab-chip", CSS)
+        self.assertIn(".home-model2 .model2-top .tab-icon", CSS)
+        self.assertIn("width: 44px", CSS)
+        self.assertIn("height: 44px", CSS)
+        self.assertIn("#112698", CSS)
+        self.assertRegex(
+            CSS,
+            r"\.home-model2 \.model2-top \.tab-item::after\s*\{[^}]*display:\s*none",
+        )
+        match = re.search(
+            r'<div class="model2-top">(.*?)</div>\s*<div class="model2-bottom">',
+            HOME,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(match, "model2-top bloğu bulunamadı")
+        model2_top = match.group(1)
+        self.assertIn('class="tab-chip"', model2_top)
+        self.assertIn('href="/commercial-display/"', model2_top)
+        self.assertIn('href="/rental-staging/"', model2_top)
+        self.assertIn('href="/dooh/"', model2_top)
+        self.assertIn('href="/accessories/"', model2_top)
+        self.assertNotIn('class="img1"', model2_top)
+        self.assertNotIn("/public/wwwroot/media/", model2_top)
+        self.assertEqual(model2_top.count("<svg"), 4)
 
     def test_shared_page_media_and_buttons_are_normalized(self):
         for selector in (
@@ -57,11 +84,41 @@ class LayoutContractTests(unittest.TestCase):
             r"\.contact-info-i:hover \.contact-info-img\s*>\s*img\s*\{[^}]*transform:\s*rotate\(",
         )
 
+    def test_home_model4_card_link_is_compact_cta(self):
+        self.assertIn(
+            ".home-model4 .model4-content .model4-content-l .card-item-img img",
+            CSS,
+        )
+        self.assertNotIn(
+            ".home-model4 .model4-content .model4-content-l img {",
+            CSS,
+        )
+        self.assertRegex(
+            CSS,
+            r"\.home-model4 \.model4-content \.model4-content-l \.card-link[^{]*\{[^}]*display:\s*inline-flex",
+        )
+        self.assertRegex(
+            CSS,
+            r"\.home-model4 \.model4-content \.model4-content-l \.card-link[^{]*\{[^}]*min-height:\s*44px",
+        )
+        self.assertRegex(
+            CSS,
+            r"\.home-model4 \.model4-content \.model4-content-l \.card-link[^{]*\{[^}]*white-space:\s*nowrap",
+        )
+        self.assertRegex(
+            CSS,
+            r"\.home-model4 \.model4-content \.model4-content-l \.card-link img[^{]*\{[^}]*width:\s*18px",
+        )
+        self.assertRegex(
+            CSS,
+            r"\.home-model4 \.model4-content \.model4-content-l \.card-link span[^{]*\{[^}]*margin-left:\s*0",
+        )
+
     def test_layout_css_is_versioned(self):
         for page in PAGES:
             html = page.read_text(encoding="utf-8")
             with self.subTest(page=page.relative_to(ROOT)):
-                self.assertIn("motion.css?v=1.1.6", html)
+                self.assertIn("motion.css?v=1.1.9", html)
 
     def test_breadcrumb_home_icon_uses_svg(self):
         icon_svg = ROOT / "public/wwwroot/images/icon-home.svg"
@@ -87,6 +144,70 @@ class LayoutContractTests(unittest.TestCase):
         self.assertIn("top: auto !important", joined)
         self.assertNotIn("position: sticky", joined)
         self.assertNotIn("position: fixed", joined)
+
+    def test_home_model5_dealer_cards_link_to_maps(self):
+        self.assertIn('id="i5"', HOME)
+        self.assertIn('class="la-dealer-cards"', HOME)
+        self.assertIn(
+            'src="/public/wwwroot/images/world-service-map.svg"',
+            HOME,
+        )
+        self.assertTrue(
+            (ROOT / "public/wwwroot/images/world-service-map.svg").is_file()
+        )
+        cards = re.findall(
+            r'<a\s+class="la-dealer-card"[^>]*href="([^"]+)"',
+            HOME,
+        )
+        self.assertEqual(len(cards), 3)
+        for href in cards:
+            self.assertIn("google.com/maps/search/", href)
+            self.assertIn("api=1", href)
+        self.assertIn("syncDealerHighlight", HOME)
+        self.assertIn("#i5.home-model5::after", CSS)
+        self.assertIn("#i5 .he_f1p1.la-dealers::before", CSS)
+        self.assertRegex(
+            CSS,
+            r"#i5 \.la-dealer-card\s*\{[^}]*background(?:-color)?:\s*#fff",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i5 \.la-dealer-card\s*\{[^}]*opacity:\s*1\s*!important",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i5 \.la-dealer-card\s*\{[^}]*filter:\s*none\s*!important",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i5 \.la-dealer-card h3\s*\{[^}]*color:\s*#172033[^}]*font-size:\s*(?:16|17|18)px[^}]*font-weight:\s*700",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i5 \.la-dealer-card p\s*\{[^}]*color:\s*#172033[^}]*font-size:\s*14px[^}]*opacity:\s*1\s*!important",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i5 \.la-dealer-cards\s*\{[^}]*z-index:\s*[3-9]\d",
+        )
+        self.assertIn("#i5 .la-dealer-card:focus", CSS)
+
+    def test_footer_title2_matches_column_link_style(self):
+        self.assertIn(".public-footer .title.title2", CSS)
+        blocks = re.findall(r"\.public-footer \.title\.title2\s*\{([^}]+)\}", CSS)
+        self.assertTrue(blocks, "motion.css .public-footer .title.title2 kuralı yok")
+        joined = "\n".join(blocks)
+        self.assertIn("color: #666", joined)
+        self.assertIn("font-size: 14px", joined)
+        self.assertIn("font-weight: normal", joined)
+        self.assertNotIn("#d96515", joined)
+        hover_blocks = re.findall(
+            r"\.public-footer \.title\.title2:hover\s*\{([^}]+)\}", CSS
+        )
+        self.assertTrue(hover_blocks, "motion.css .public-footer .title.title2:hover kuralı yok")
+        hover_joined = "\n".join(hover_blocks)
+        self.assertIn("opacity", hover_joined)
+        self.assertIn("color: #666", hover_joined)
 
 
 if __name__ == "__main__":
