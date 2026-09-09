@@ -53,12 +53,13 @@ nav ul li > a::after {
 }
 
 nav ul li .sub-nav {
-  transform: translateY(8px);
+  left: 50%;
+  transform: translate(-50%, 8px);
   transition: opacity 0.35s ease, visibility 0.35s ease, transform 0.35s ease;
 }
 
 nav ul li:hover .sub-nav {
-  transform: translateY(0);
+  transform: translate(-50%, 0);
 }
 
 .trans-up:hover {
@@ -196,6 +197,335 @@ body > div[style*="border:1px solid #990000"] {
   width: 28px;
   height: 28px;
   object-fit: contain;
+}
+
+/* LEDKASA tarzı üst menü — her zaman okunur */
+header {
+  background: rgba(247, 248, 252, 0.98) !important;
+}
+
+header .header.md-dn,
+.header.md-dn,
+.header,
+.header.cur,
+.header.on,
+.header.active {
+  height: 80px;
+  background: rgba(247, 248, 252, 0.96) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(17, 38, 152, 0.12) !important;
+  box-shadow: 0 10px 28px -18px rgba(14, 23, 48, 0.28);
+}
+
+.header > .mauto {
+  height: 80px;
+}
+
+.header .logo .i1 {
+  display: none !important;
+}
+
+.header .logo .i2 {
+  display: block !important;
+  max-height: 36px;
+}
+
+.header-ul {
+  height: 80px;
+  margin-right: 12px;
+  gap: 2px;
+}
+
+.header nav ul li > a {
+  color: #112698 !important;
+  padding: 0 14px !important;
+  height: 80px;
+  font-weight: 650;
+  border-radius: 999px;
+}
+
+.header nav ul li > a::after {
+  display: none !important;
+}
+
+.header nav ul li:hover {
+  background: none !important;
+}
+
+.header nav ul li > a:hover,
+.header nav ul li:hover > a {
+  background: rgba(17, 38, 152, 0.08);
+  color: #001584 !important;
+}
+
+.header .header-top {
+  display: none !important;
+}
+
+.header-top em,
+.header-top .item > span,
+.header .lang .search-b input {
+  color: #112698 !important;
+}
+
+.header .lang .search-b {
+  background: rgba(17, 38, 152, 0.08);
+}
+
+.header .lang .search-b .i1,
+.header-top .img1,
+.header a[data-social="weixin"] {
+  display: none !important;
+}
+
+.header .lang .search-b .i2,
+.header-top .img2 {
+  display: inline-block !important;
+}
+
+.tl-quote {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 18px;
+  margin-left: 8px;
+  border-radius: 999px;
+  background: #112698;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tl-quote:hover {
+  background: #001584;
+  color: #fff !important;
+}
+
+nav ul li .sub-nav {
+  top: 80px !important;
+  left: 0;
+  right: 0;
+  width: min(1180px, calc(100vw - 48px));
+  padding: 22px 24px;
+  border-radius: 22px;
+  background: #10182f;
+  box-shadow: 0 24px 60px -24px rgba(8, 14, 36, 0.55);
+}
+
+nav ul li:hover .sub-nav,
+.header.on nav ul li:hover .sub-nav,
+.header.on nav ul li .sub-nav {
+  top: 80px !important;
+}
+
+nav ul li .sub-nav::after {
+  display: none;
+}
+
+.row-left-info,
+.row-left-info > p {
+  color: #f4f6fb !important;
+  font-size: 15px;
+}
+
+.row-left-i:hover .row-left-info,
+.row-left-i:hover .row-left-info * {
+  color: #9db4ff !important;
+}
+
+.row-right-i-child-i > .t1 {
+  color: #c5cce0 !important;
+  border-radius: 8px;
+  padding: 6px 10px !important;
+}
+
+.row-right-i-child-i > .t1:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.row-right-img {
+  display: none !important;
+}
+
+nav ul li .sub-nav .row .row-right {
+  border-left-color: rgba(255, 255, 255, 0.12);
+}
+
+.header-m {
+  background: rgba(247, 248, 252, 0.98) !important;
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(17, 38, 152, 0.12);
+}
+
+/* Footer adres kutusu taşmasın */
+.public-footer > .top {
+  align-items: flex-start !important;
+  padding: 40px 20px 48px !important;
+  overflow: visible;
+  min-height: 0;
+}
+
+.public-footer-b .public-footer-i {
+  width: 18% !important;
+  flex: 0 0 18%;
+}
+
+.public-footer > .top .list {
+  width: 46% !important;
+  flex: 0 1 46%;
+}
+
+.public-footer-b .contact-card {
+  max-width: none !important;
+  max-height: none !important;
+  height: auto !important;
+  width: 34%;
+  flex: 1 1 280px;
+  white-space: normal;
+  overflow: visible;
+  margin-top: 0;
+  padding: 18px 20px;
+}
+
+.public-footer-b .contact-card .contact-item .contact-item-p2 {
+  white-space: normal;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.public-footer-b .contact-card .contact-item .contact-item-p1 {
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.public-footer-b .contact-card .contact-item {
+  margin: 0 0 12px;
+}
+
+.public-footer-b .contact-card .contact-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Ürün kart görseli */
+.home-model2.template1080 {
+  height: auto !important;
+  min-height: 0;
+  padding-bottom: 48px;
+}
+
+.home-model2 .model2-right {
+  max-width: 420px;
+  margin-left: auto;
+}
+
+.home-model2 .model2-right .swiper-slide {
+  max-width: 420px !important;
+  max-height: 320px !important;
+}
+
+.home-model2 .model2-right .swiper-slide img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.home-model2 .model2-left .h-more {
+  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: #112698;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.home-model4 .model4-content .model4-content-l .card-link,
+.home-model4 .model4-content .model4-content-l:nth-child(2) .card-link {
+  height: auto;
+  min-height: 48px;
+  padding: 12px 20px;
+  font-size: 15px;
+  border-radius: 999px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.la-dealer-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: min(1180px, calc(100% - 40px));
+  margin: 8px auto 40px;
+}
+
+.la-dealer-card {
+  background: #fff;
+  border: 1px solid rgba(17, 38, 152, 0.1);
+  border-radius: 16px;
+  padding: 20px 22px;
+  box-shadow: 0 12px 28px -20px rgba(17, 38, 152, 0.35);
+}
+
+.la-dealer-card h3 {
+  margin: 0 0 8px;
+  color: #112698;
+  font-size: 18px;
+}
+
+.la-dealer-card p {
+  margin: 0 0 8px;
+  color: #445;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.la-dealer-card a {
+  display: inline-flex;
+  margin-right: 12px;
+  color: #112698;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.la-dealer-card.on {
+  border-color: #112698;
+  box-shadow: 0 16px 32px -18px rgba(17, 38, 152, 0.55);
+}
+
+.he_f1p1map {
+  height: auto !important;
+  min-height: 420px;
+  max-height: 560px;
+}
+
+.he_ghig img {
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+}
+
+.he_ghdot p {
+  font-size: 12px !important;
+  color: #112698 !important;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+  .tl-quote {
+    display: none;
+  }
+
+  .la-dealer-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

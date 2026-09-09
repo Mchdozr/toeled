@@ -220,6 +220,34 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
     }
 })();
 
+(function initToeledNav() {
+    function ready(fn) {
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", fn);
+        } else {
+            fn();
+        }
+    }
+
+    ready(function () {
+        document.querySelectorAll(".header.md-dn").forEach(function (header) {
+            if (header.querySelector(".tl-quote")) {
+                return;
+            }
+            var quote = document.createElement("a");
+            quote.className = "tl-quote";
+            quote.href = "/contact-us/";
+            quote.textContent = "Teklif Al";
+            var top = header.querySelector(".header-top");
+            if (top) {
+                header.querySelector(".mauto") && header.querySelector(".mauto").insertBefore(quote, top);
+            } else {
+                header.appendChild(quote);
+            }
+        });
+    });
+})();
+
 //只允许输入数字
 function checkNumber(e) {
     var keynum = window.event ? e.keyCode : e.which;
