@@ -1,4 +1,4 @@
-import unittest
+﻿import unittest
 from pathlib import Path
 
 
@@ -25,7 +25,7 @@ class NavigationContractTests(unittest.TestCase):
         for page in PAGES:
             html = page.read_text(encoding="utf-8")
             with self.subTest(page=page.relative_to(ROOT)):
-                self.assertIn("motion.css?v=1.1.9", html)
+                self.assertIn("motion.css?v=1.1.13", html)
                 self.assertIn("my-js.js?v=1.1.0", html)
 
     def test_navigation_has_accessible_controls(self):

@@ -1,4 +1,4 @@
-import re
+﻿import re
 import unittest
 from pathlib import Path
 
@@ -26,8 +26,15 @@ class LayoutContractTests(unittest.TestCase):
         self.assertIn("min-height: 44px", CSS)
 
     def test_home_model2_top_uses_icon_chips(self):
-        self.assertIn(".home-model2 .model2-top .tab-chip", CSS)
+        self.assertIn(".home-model2 .model2-top .tab-item a.tab-chip", CSS)
         self.assertIn(".home-model2 .model2-top .tab-icon", CSS)
+        self.assertIn("display: inline-flex", CSS)
+        self.assertIn("padding: 10px 18px", CSS)
+        self.assertIn("min-height: 48px", CSS)
+        self.assertRegex(
+            CSS,
+            r"\.home-model2 \.model2-top \.tab-item a\.tab-chip[^{]*\{[^}]*width:\s*auto",
+        )
         self.assertIn("width: 44px", CSS)
         self.assertIn("height: 44px", CSS)
         self.assertIn("#112698", CSS)
@@ -50,6 +57,32 @@ class LayoutContractTests(unittest.TestCase):
         self.assertNotIn('class="img1"', model2_top)
         self.assertNotIn("/public/wwwroot/media/", model2_top)
         self.assertEqual(model2_top.count("<svg"), 4)
+
+    def test_home_model2_bottom_uses_card_deck_swap(self):
+        self.assertRegex(
+            CSS,
+            r"\.home-model2 \.model2-bottom:not\(\.model2-bottom-item\)\s*\{[^}]*display:\s*grid",
+        )
+        self.assertRegex(
+            CSS,
+            r"\.model2-bottom-item\s*\{[^}]*grid-area:\s*1\s*/\s*1",
+        )
+        self.assertRegex(
+            CSS,
+            r"\.model2-bottom-item\s*\{[^}]*opacity:\s*0[^}]*pointer-events:\s*none",
+        )
+        self.assertRegex(
+            CSS,
+            r"\.model2-bottom-item\.cur\s*\{[^}]*opacity:\s*1[^}]*z-index:\s*2",
+        )
+        self.assertRegex(
+            CSS,
+            r"\.model2-bottom-item \.model2-right \.mySwiper\s*\{[^}]*overflow:\s*hidden",
+        )
+        self.assertRegex(
+            CSS,
+            r"prefers-reduced-motion:\s*reduce\)\s*\{[^}]*model2-bottom-item",
+        )
 
     def test_shared_page_media_and_buttons_are_normalized(self):
         for selector in (
@@ -84,9 +117,37 @@ class LayoutContractTests(unittest.TestCase):
             r"\.contact-info-i:hover \.contact-info-img\s*>\s*img\s*\{[^}]*transform:\s*rotate\(",
         )
 
+    def test_home_model4_cards_have_equal_layout(self):
+        self.assertIn("#i4 .model4-content.cur", CSS)
+        self.assertRegex(
+            CSS,
+            r"#i4 \.model4-content\.cur[^{]*\{[^}]*display:\s*grid",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i4 \.model4-content\.cur[^{]*\{[^}]*align-items:\s*stretch",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i4 \.model4-content \.card-item-img[^{]*\{[^}]*aspect-ratio:\s*16\s*/\s*10",
+        )
+        self.assertIn('class="model4-content-l model4-content-l--stack"', HOME)
+        self.assertRegex(
+            HOME,
+            r'<div class="model4-content-l model4-content-l--stack">\s*<a[^>]+class="card-item"[^>]*>\s*<div class="card-item-img img-scale">',
+        )
+        self.assertRegex(
+            HOME,
+            r'<div class="card-item-date">7 Şubat 2026</div>\s*<div class="card-item-title">Toeled ISE 2026',
+        )
+        self.assertRegex(
+            HOME,
+            r'<div class="card-item-date">28 Kasım 2025</div>\s*<div class="card-item-title">ISE 2026',
+        )
+
     def test_home_model4_card_link_is_compact_cta(self):
         self.assertIn(
-            ".home-model4 .model4-content .model4-content-l .card-item-img img",
+            "#i4 .model4-content .card-item-img img",
             CSS,
         )
         self.assertNotIn(
@@ -114,11 +175,47 @@ class LayoutContractTests(unittest.TestCase):
             r"\.home-model4 \.model4-content \.model4-content-l \.card-link span[^{]*\{[^}]*margin-left:\s*0",
         )
 
+    def test_home_model4_cards_use_modern_card_style(self):
+        self.assertRegex(
+            CSS,
+            r"#i4\.home-model4\s*\{[^}]*min-height:\s*0\s*!important",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i4 \.model4-content \.card-item\s*\{[^}]*border-radius:\s*16px",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i4 \.model4-content \.card-item\s*\{[^}]*background:\s*#fff",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i4 \.model4-content \.card-item-date\s*\{[^}]*border-radius:\s*999px",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i4 \.model4-content \.card-item-title\s*\{[^}]*font-size:\s*20px\s*!important",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i4 \.model4-content \.card-item-btn\s*\{[^}]*border-radius:\s*50%",
+        )
+        self.assertRegex(
+            CSS,
+            r"#i4 \.model4-content \.model4-content-l:hover \.card-item-btn[^{]*\{[^}]*background:\s*#112698",
+        )
+        self.assertRegex(
+            CSS,
+            r"\.home-model4 \.model4-content \.model4-content-l \.card-link[^{]*\{[^}]*background:\s*#112698",
+        )
+        self.assertNotIn("background-color: red", CSS)
+        self.assertNotIn("model4-content-l--stack)::after", CSS)
+
     def test_layout_css_is_versioned(self):
         for page in PAGES:
             html = page.read_text(encoding="utf-8")
             with self.subTest(page=page.relative_to(ROOT)):
-                self.assertIn("motion.css?v=1.1.9", html)
+                self.assertIn("motion.css?v=1.1.13", html)
 
     def test_breadcrumb_home_icon_uses_svg(self):
         icon_svg = ROOT / "public/wwwroot/images/icon-home.svg"
@@ -192,22 +289,56 @@ class LayoutContractTests(unittest.TestCase):
         )
         self.assertIn("#i5 .la-dealer-card:focus", CSS)
 
-    def test_footer_title2_matches_column_link_style(self):
-        self.assertIn(".public-footer .title.title2", CSS)
-        blocks = re.findall(r"\.public-footer \.title\.title2\s*\{([^}]+)\}", CSS)
-        self.assertTrue(blocks, "motion.css .public-footer .title.title2 kuralı yok")
-        joined = "\n".join(blocks)
-        self.assertIn("color: #666", joined)
-        self.assertIn("font-size: 14px", joined)
-        self.assertIn("font-weight: normal", joined)
-        self.assertNotIn("#d96515", joined)
-        hover_blocks = re.findall(
-            r"\.public-footer \.title\.title2:hover\s*\{([^}]+)\}", CSS
+    def test_footer_uses_navy_brand_and_clickable_contact(self):
+        self.assertRegex(
+            CSS,
+            r"\.public-footer-b\s*\{[^}]*background-color:\s*#f5f6f8",
         )
-        self.assertTrue(hover_blocks, "motion.css .public-footer .title.title2:hover kuralı yok")
-        hover_joined = "\n".join(hover_blocks)
-        self.assertIn("opacity", hover_joined)
-        self.assertIn("color: #666", hover_joined)
+        title_blocks = re.findall(
+            r"\.public-footer-b \.public-footer > \.top \.list \.list-i \.title[^{]*\{([^}]+)\}",
+            CSS,
+        )
+        self.assertTrue(title_blocks, "footer column title kuralı yok")
+        joined = "\n".join(title_blocks)
+        self.assertIn("color: #112698", joined)
+        self.assertNotIn("#d96515", joined)
+        self.assertRegex(
+            CSS,
+            r"\.public-footer-b \.contact-card \.contact-item \.contact-item-p1[^{]*\{[^}]*color:\s*#112698",
+        )
+        self.assertIn('src="/public/wwwroot/images/logo10.svg" alt="TOELED"', HOME)
+        self.assertIn('href="mailto:info@ledajans.com"', HOME)
+        self.assertIn('href="tel:+902122204004"', HOME)
+        self.assertIn('href="tel:+905438795108"', HOME)
+        self.assertIn('href="tel:+905304056768"', HOME)
+        footer_match = re.search(
+            r'<div class="contact-card">(.*?)</div>\s*</div>\s*</div>\s*</div>\s*</footer>',
+            HOME,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(footer_match, "contact-card bloğu bulunamadı")
+        contact_card = footer_match.group(1)
+        map_links = re.findall(r'href="(https://www\.google\.com/maps/search/\?api=1[^"]+)"', contact_card)
+        self.assertEqual(len(map_links), 3)
+        for href in map_links:
+            self.assertIn("api=1", href)
+        iletisim_match = re.search(
+            r'<a class="title" href="/contact-us/">İletişim</a>\s*'
+            r'<div class="public-footer-info">(.*?)</div>',
+            HOME,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(iletisim_match, "İletişim sütunu bulunamadı")
+        iletisim_links = iletisim_match.group(1)
+        self.assertIn('href="/about-us/"', iletisim_links)
+        self.assertIn('href="/news/"', iletisim_links)
+        self.assertNotIn("title title2", HOME)
+        for page in PAGES:
+            html = page.read_text(encoding="utf-8")
+            with self.subTest(page=page.relative_to(ROOT)):
+                self.assertIn('href="mailto:info@ledajans.com"', html)
+                self.assertIn("logo10.svg", html)
+                self.assertNotIn("title title2", html)
 
 
 if __name__ == "__main__":
