@@ -45,6 +45,8 @@
   gtag('config', '');
 </script>  <script src="/scripts/jquery/jquery.tmpl.min.js"></script>
   <script src="/public/wwwroot/js/api.js"></script>
+  <script src="/public/wwwroot/js/qce-cert-lookup.js"></script>
+  <script>window.TOELED_CERT_LOOKUP_URL = window.TOELED_CERT_LOOKUP_URL || '';</script>
 </head>
 
 <body>
@@ -492,11 +494,7 @@
             <input type="text" placeholder="Cert No *" name="cNo" datatype="*1-50" nullmsg="Please enter your Cert No" errormsg="Cert No cannot be empty and must be en fazla 50 karakter" sucmsg=" " />
           </div>
 
-          <div class="form-item form-code">
-            <input type="text" placeholder="Code *" name="code" datatype="*1-50" nullmsg="Please enter OTP" errormsg="OTP cannot be empty" sucmsg=" " />
-            <a href="javascript:;" style="padding:0px"><img src="/Manage_SW/ValidateCode" id="CodePic" onclick="this.src='/Manage_SW/ValidateCode?s='+Math.random()" style="max-width:128px;" /></a>
-          </div>
-          <button id="btnGönder" name="btnGönder" type="button" onclick="toSearch()" class="submit-btn" id="queryBtn">click query</button>
+          <button id="btnGönder" name="btnGönder" type="button" onclick="toSearch()" class="submit-btn" id="queryBtn">Sorgula</button>
         </div>
 
       </div>
@@ -511,19 +509,12 @@
   </main>
   <script>
     function toSearch() {
-      swal('Searching', {
-        closeOnClickOutside: false,
-        button: false
-      })
       var name = $.trim($("input[name=name]").val());
       var cNo = $.trim($("input[name=cNo]").val());
-      var code = $.trim($("input[name=code]").val());
       if (name == '') {
         swal({
           title: "Lütfen adınızı yazın",
           icon: "warning"
-        }).then(function(value) {
-          swal.close();
         });
         return;
       }
@@ -531,44 +522,35 @@
         swal({
           title: "Please enter your Cert No",
           icon: "warning"
-        }).then(function(value) {
-          swal.close();
         });
         return;
       }
-      if (code == '') {
-        swal({
-          title: "Please enter OTP",
-          icon: "warning"
-        }).then(function(value) {
-          swal.close();
-        });
-        return;
-      }
-      YG.api_one('/', 'QceCertLookup', {
-        "name": name,
-        "cNo": cNo,
-        "code": code
-      }, function(data) {
+      swal('Searching', {
+        closeOnClickOutside: false,
+        button: false
+      });
+      ToeledCertLookup.lookup(name, cNo).then(function(data) {
         swal.close();
         if (data.status == 1) {
           $(".result-area").html($("#qcelook").tmpl(data.data));
           $("input[name=name]").val('');
           $("input[name=cNo]").val('');
-          $("input[name=code]").val('');
           var targetOffset = $(".result-area").offset().top;
           $("html, body").animate({
             scrollTop: targetOffset
           }, 1000);
-
         } else {
           swal({
-            title: data.msg,
+            title: data.msg || 'Sertifika bulunamadı',
             icon: "warning"
-          })
+          });
         }
+      }).catch(function() {
+        swal({
+          title: 'Sertifika sorgusu başarısız',
+          icon: "warning"
+        });
       });
-
     }
   </script>
   <script type="text/x-jquery-tmpl" id="qcelook">

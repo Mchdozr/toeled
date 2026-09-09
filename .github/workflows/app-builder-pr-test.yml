@@ -1,0 +1,33 @@
+name: App Builder PR Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app-builder
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup AIO CLI
+        uses: adobe/aio-cli-setup-action@3
+        with:
+          os: ubuntu
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm test

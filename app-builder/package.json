@@ -1,0 +1,36 @@
+{
+  "name": "toeled-app-builder",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Adobe App Builder backend for Toeled QCE certificate lookup",
+  "dependencies": {
+    "@adobe/aio-sdk": "^6"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-plugin-jest": "^27.2.3",
+    "jest": "^29"
+  },
+  "scripts": {
+    "test": "jest --coverage ./test",
+    "lint": "eslint --no-error-on-unmatched-pattern test actions",
+    "lint:fix": "npm run lint -- --fix",
+    "lookup": "node scripts/invoke-local.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/e2e/"
+    ],
+    "collectCoverageFrom": [
+      "actions/**/*.js"
+    ]
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
