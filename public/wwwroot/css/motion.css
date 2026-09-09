@@ -155,6 +155,11 @@ body > div[style*="border:1px solid #990000"] {
   object-position: center 42%;
 }
 
+.public-nav {
+  position: static !important;
+  top: auto !important;
+}
+
 .home-swiper {
   height: 100vh;
   max-height: 760px;
@@ -179,6 +184,10 @@ body > div[style*="border:1px solid #990000"] {
 
 .contact-info-img {
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
 }
 
 .contact-info-img > img {
@@ -187,6 +196,17 @@ body > div[style*="border:1px solid #990000"] {
   max-width: 70%;
   max-height: 70%;
   object-fit: contain;
+  transform-origin: center center;
+  transition: transform 0.4s ease;
+}
+
+.contact-info-i:hover .contact-info-img {
+  display: flex;
+  transform: none;
+}
+
+.contact-info-i:hover .contact-info-img > img {
+  transform: rotate(360deg);
 }
 
 .public-footer-code {
@@ -816,40 +836,253 @@ body.tl-nav-open {
   margin-bottom: 0;
 }
 
-/* Ürün kart görseli */
-.home-model2.template1080 {
-  height: auto !important;
-  min-height: 0;
-  padding-bottom: 48px;
+/* Ürün / anasayfa / liste görsel-metin ritmi */
+.product-swiper {
+  max-width: 920px;
+  margin: 12px auto 0;
 }
 
-.home-model2 .model2-right {
-  max-width: 420px;
-  margin-left: auto;
-}
-
-.home-model2 .model2-right .swiper-slide {
-  max-width: 420px !important;
-  max-height: 320px !important;
-}
-
-.home-model2 .model2-right .swiper-slide img {
-  width: 100%;
-  max-height: 300px;
+.product-swiper-i,
+.product-swiper-i > img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 420px;
+  margin: 0 auto;
   object-fit: contain;
 }
 
+.product-model1 .row-i,
+.product-model2 .row-i,
+.product-model4 .row-i {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 1.1fr);
+  gap: 28px 40px;
+  align-items: center;
+}
+
+.product-model1-left,
+.product-model1-right,
+.product-model4 .product-model1-left,
+.product-model4 .product-model1-right {
+  width: auto !important;
+  max-width: 100%;
+  margin-top: 0 !important;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.product-model1-right img,
+.product-model1-right-i img,
+.product-model2-i > img {
+  width: 100%;
+  max-height: 380px;
+  height: auto !important;
+  object-fit: contain;
+}
+
+.product-model6 .row-i img {
+  display: block;
+  width: auto;
+  max-width: min(100%, 1100px);
+  max-height: 640px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.product-model1-title > .t1 {
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+.product-b-type-i {
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 15px;
+}
+
+.home-model2.template1080 {
+  height: auto !important;
+  min-height: 0;
+  padding: 36px 0 56px;
+}
+
+.home-model2 .model2-bottom.cur,
+.home-model2 .model2-bottom-item.cur {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.home-model2 .model2-left {
+  width: 42%;
+  flex: 1 1 38%;
+  min-width: 0;
+}
+
+.home-model2 .model2-right {
+  width: 52%;
+  flex: 1 1 48%;
+  max-width: none;
+  margin-left: 0;
+}
+
+.home-model2 .model2-left .left {
+  max-width: none;
+}
+
+.home-model2 .model2-left .t1 {
+  font-size: 32px;
+  line-height: 1.2;
+  margin-top: 8px;
+}
+
+.home-model2 .model2-left .t2 {
+  margin-top: 14px;
+  max-width: 36em;
+}
+
 .home-model2 .model2-left .h-more {
-  margin-bottom: 24px;
+  margin-top: 20px;
+  margin-bottom: 0;
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
-  padding: 0 16px;
+  min-height: 44px;
+  padding: 0 20px;
   border-radius: 999px;
   background: #112698;
   color: #fff !important;
   font-size: 14px;
   font-weight: 700;
+}
+
+.home-model2 .model2-right .swiper-slide {
+  max-width: none !important;
+  max-height: 380px !important;
+}
+
+.home-model2 .model2-right .swiper-slide img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+}
+
+.home-model2 .model2-top .tab-item a {
+  width: 56px;
+  height: 56px;
+}
+
+.home-model2 .model2-top .tab-item a img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.home-model2 .model2-top .tab-item-btn {
+  position: static;
+  height: 44px;
+  min-width: 112px;
+  margin-left: auto;
+  font-size: 14px;
+}
+
+.home-model2 .model2-right .mySwiper .page-box {
+  height: auto;
+  width: 44px;
+}
+
+.home-model2 .model2-right .mySwiper .page-box .swiper-button-next,
+.home-model2 .model2-right .mySwiper .page-box .swiper-button-prev {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+}
+
+.home-model1 .row1 .left > p > .h-more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 20px;
+  margin-bottom: 0;
+  border-radius: 999px;
+  background: #112698;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.home-model1 .model1-left .right img,
+.home-model1 .row1 .right img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+}
+
+.home-model3 .model3-top-title {
+  font-size: 32px;
+}
+
+.home-model3 .caseSwiper .swiper-slide img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+}
+
+.home-model4 .model4-content .model4-content-l img {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+}
+
+.news-b-con img {
+  max-width: min(100%, 860px);
+  max-height: 480px;
+  height: auto;
+  object-fit: contain;
+}
+
+.product-list-b-img {
+  min-height: 220px !important;
+  max-height: 240px !important;
+}
+
+.product-list-b-img > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.culture-b-list-i .row .row-a .row-a-img {
+  min-height: 56px;
+  max-height: 72px;
+}
+
+.culture-b-list-i .row .row-a .row-a-img img {
+  max-height: 64px;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .product-model1 .row-i,
+  .product-model2 .row-i,
+  .product-model4 .row-i,
+  .home-model2 .model2-bottom.cur,
+  .home-model2 .model2-bottom-item.cur {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .home-model2 .model2-left,
+  .home-model2 .model2-right {
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  .home-model2 .model2-left .t1 {
+    font-size: 26px;
+  }
 }
 
 .home-model4 .model4-content .model4-content-l .card-link,
