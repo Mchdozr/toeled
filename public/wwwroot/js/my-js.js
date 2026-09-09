@@ -220,32 +220,121 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
     }
 })();
 
-(function initToeledNav() {
-    function ready(fn) {
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", fn);
-        } else {
-            fn();
+(function initToeledNavigation() {
+    function boot() {
+        var header = document.querySelector("[data-tl-header]");
+        if (!header) {
+            return;
         }
-    }
 
-    ready(function () {
-        document.querySelectorAll(".header.md-dn").forEach(function (header) {
-            if (header.querySelector(".tl-quote")) {
+        var triggers = Array.prototype.slice.call(header.querySelectorAll("[data-tl-menu]"));
+        var panels = Array.prototype.slice.call(header.querySelectorAll("[data-tl-panel]"));
+        var mobileToggle = header.querySelector("[data-tl-mobile-toggle]");
+        var mobileNav = header.querySelector("[data-tl-mobile-nav]");
+        var lastTrigger = null;
+        var closeTimer = null;
+
+        function closeDesktopMenus(restoreFocus) {
+            triggers.forEach(function (trigger) {
+                trigger.setAttribute("aria-expanded", "false");
+            });
+            panels.forEach(function (panel) {
+                panel.setAttribute("aria-hidden", "true");
+                panel.removeAttribute("data-open");
+            });
+            if (restoreFocus && lastTrigger) {
+                lastTrigger.focus();
+            }
+        }
+
+        function openMenu(trigger) {
+            var panel = document.getElementById(trigger.getAttribute("aria-controls"));
+            closeDesktopMenus(false);
+            if (!panel) {
                 return;
             }
-            var quote = document.createElement("a");
-            quote.className = "tl-quote";
-            quote.href = "/contact-us/";
-            quote.textContent = "Teklif Al";
-            var top = header.querySelector(".header-top");
-            if (top) {
-                header.querySelector(".mauto") && header.querySelector(".mauto").insertBefore(quote, top);
-            } else {
-                header.appendChild(quote);
+            lastTrigger = trigger;
+            trigger.setAttribute("aria-expanded", "true");
+            panel.setAttribute("aria-hidden", "false");
+            panel.setAttribute("data-open", "true");
+        }
+
+        triggers.forEach(function (trigger) {
+            var group = trigger.closest("[data-tl-group]");
+            trigger.addEventListener("click", function () {
+                if (trigger.getAttribute("aria-expanded") === "true") {
+                    closeDesktopMenus(false);
+                } else {
+                    openMenu(trigger);
+                }
+            });
+            group.addEventListener("mouseenter", function () {
+                window.clearTimeout(closeTimer);
+                openMenu(trigger);
+            });
+            group.addEventListener("mouseleave", function () {
+                closeTimer = window.setTimeout(function () {
+                    closeDesktopMenus(false);
+                }, 130);
+            });
+            group.addEventListener("focusout", function (event) {
+                if (!group.contains(event.relatedTarget)) {
+                    closeDesktopMenus(false);
+                }
+            });
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!header.contains(event.target)) {
+                closeDesktopMenus(false);
             }
         });
-    });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                closeDesktopMenus(true);
+                if (mobileNav && !mobileNav.hidden) {
+                    mobileNav.hidden = true;
+                    mobileToggle.setAttribute("aria-expanded", "false");
+                    mobileToggle.setAttribute("aria-label", "Menüyü aç");
+                    document.body.classList.remove("tl-nav-open");
+                    mobileToggle.focus();
+                }
+            }
+        });
+
+        if (mobileToggle && mobileNav) {
+            mobileToggle.addEventListener("click", function () {
+                var opening = mobileNav.hidden;
+                mobileNav.hidden = !opening;
+                mobileToggle.setAttribute("aria-expanded", String(opening));
+                mobileToggle.setAttribute("aria-label", opening ? "Menüyü kapat" : "Menüyü aç");
+                document.body.classList.toggle("tl-nav-open", opening);
+            });
+
+            mobileNav.querySelectorAll("a").forEach(function (link) {
+                link.addEventListener("click", function () {
+                    mobileNav.hidden = true;
+                    mobileToggle.setAttribute("aria-expanded", "false");
+                    document.body.classList.remove("tl-nav-open");
+                });
+            });
+        }
+
+        window.addEventListener("resize", function () {
+            if (window.innerWidth > 1024 && mobileNav && !mobileNav.hidden) {
+                mobileNav.hidden = true;
+                mobileToggle.setAttribute("aria-expanded", "false");
+                document.body.classList.remove("tl-nav-open");
+            }
+        });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot);
+    } else {
+        boot();
+    }
 })();
 
 //只允许输入数字
