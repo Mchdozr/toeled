@@ -61,7 +61,23 @@ class LayoutContractTests(unittest.TestCase):
         for page in PAGES:
             html = page.read_text(encoding="utf-8")
             with self.subTest(page=page.relative_to(ROOT)):
-                self.assertIn("motion.css?v=1.1.1", html)
+                self.assertIn("motion.css?v=1.1.6", html)
+
+    def test_breadcrumb_home_icon_uses_svg(self):
+        icon_svg = ROOT / "public/wwwroot/images/icon-home.svg"
+        self.assertTrue(icon_svg.is_file())
+        self.assertIn("<svg", icon_svg.read_text(encoding="utf-8"))
+        self.assertIn('.public-nav .left > img[src*="icon-home"]', CSS)
+        nav_pages = [
+            page for page in PAGES
+            if "public-nav" in page.read_text(encoding="utf-8")
+        ]
+        self.assertTrue(nav_pages, "breadcrumb içeren sayfa bulunamadı")
+        for page in nav_pages:
+            html = page.read_text(encoding="utf-8")
+            with self.subTest(page=page.relative_to(ROOT)):
+                self.assertNotIn("icon-home.png", html)
+                self.assertIn('icon-home.svg" alt="Anasayfa"', html)
 
     def test_public_nav_scrolls_with_page(self):
         blocks = re.findall(r"\.public-nav\s*\{([^}]+)\}", CSS)

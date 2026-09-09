@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="/public/wwwroot/css/plugin.css">
 <link rel="stylesheet" href="/public/wwwroot/css/layout.css?v=1.0.0">
 <link rel="stylesheet" href="/public/wwwroot/css/style.css?v=1.0.0">
-<link rel="stylesheet" href="/public/wwwroot/css/motion.css?v=1.1.1">
+<link rel="stylesheet" href="/public/wwwroot/css/motion.css?v=1.1.6">
 <link rel="stylesheet" href="/public/wwwroot/css/swiper-bundle.min.css">
 <link rel="shortcut icon" href="/9thpanel.ico" />
 <script src="/public/wwwroot/js/plugin.js"></script>
@@ -54,20 +54,22 @@
     </a>
 
     <nav class="tl-desktop-nav" aria-label="Ana menü">
+      <a class="tl-nav-link" href="/">Anasayfa</a>
+
       <div class="tl-nav-group" data-tl-group>
         <button class="tl-nav-link tl-nav-trigger" type="button" aria-expanded="false" aria-controls="tl-products-menu" data-tl-menu>
           Ürünler <span aria-hidden="true">⌄</span>
         </button>
-        <div class="tl-mega tl-mega-products" id="tl-products-menu" aria-hidden="true" data-tl-panel>
+        <div class="tl-mega tl-mega-panel tl-mega-products" id="tl-products-menu" aria-hidden="true" data-tl-panel>
           <div class="tl-mega-intro">
             <span class="tl-kicker">ÜRÜN KATALOĞU</span>
             <strong>Projenize uygun LED ekranı birlikte seçelim.</strong>
             <p>İç mekan, dış mekan ve sahne çözümlerini tek noktadan keşfedin.</p>
-            <a href="/products/">Tüm ürünleri incele <span>→</span></a>
+            <a href="/products/">Tüm ürünleri incele <span>›</span></a>
           </div>
-          <div class="tl-product-groups">
+          <div class="tl-mega-groups">
             <section>
-              <a class="tl-group-title" href="/commercial-display/">İç Mekan <span>→</span></a>
+              <a class="tl-group-title" href="/commercial-display/">İç Mekan <span>›</span></a>
               <div class="tl-link-grid">
                 <a href="/cms-series-crystal-film-display/">CMS Kristal Film</a>
                 <a href="/hs-series-holographic-display/">HS Holografik</a>
@@ -82,7 +84,7 @@
               </div>
             </section>
             <section>
-              <a class="tl-group-title" href="/rental-staging/">Kiralama &amp; Sahne <span>→</span></a>
+              <a class="tl-group-title" href="/rental-staging/">Kiralama &amp; Sahne <span>›</span></a>
               <div class="tl-link-grid">
                 <a href="/rw-series/">RW Serisi</a>
                 <a href="/cg-series/">CG Serisi</a>
@@ -92,14 +94,14 @@
               </div>
             </section>
             <section>
-              <a class="tl-group-title" href="/dooh/">Dış Mekan <span>→</span></a>
+              <a class="tl-group-title" href="/dooh/">Dış Mekan <span>›</span></a>
               <div class="tl-link-grid">
                 <a href="/outdoor-q-series/">Dış Mekan Q</a>
                 <a href="/outdoor-s-series/">Dış Mekan S</a>
               </div>
             </section>
             <section>
-              <a class="tl-group-title" href="/accessories/">Aksesuarlar <span>→</span></a>
+              <a class="tl-group-title" href="/accessories/">Aksesuarlar <span>›</span></a>
               <div class="tl-link-grid">
                 <a href="/qm-series/">QM Serisi</a>
                 <a href="/mg-series/">MG Serisi</a>
@@ -112,7 +114,7 @@
             <img src="/public/wwwroot/media/showroom-videowall.webp" alt="Toeled LED ekran showroom">
             <span>Ücretsiz proje keşfi</span>
             <strong>Doğru ürünü uzmanla belirleyin.</strong>
-            <em>Teklif alın →</em>
+            <em>Teklif alın ›</em>
           </a>
         </div>
       </div>
@@ -121,16 +123,45 @@
         <button class="tl-nav-link tl-nav-trigger" type="button" aria-expanded="false" aria-controls="tl-cases-menu" data-tl-menu>
           Referanslar <span aria-hidden="true">⌄</span>
         </button>
-        <div class="tl-mega tl-mega-compact" id="tl-cases-menu" aria-hidden="true" data-tl-panel>
-          <div class="tl-compact-copy">
+        <div class="tl-mega tl-mega-panel tl-mega-cases" id="tl-cases-menu" aria-hidden="true" data-tl-panel>
+          <div class="tl-mega-intro">
             <span class="tl-kicker">UYGULAMALAR</span>
             <strong>Sahada kendini kanıtlayan LED çözümleri.</strong>
+            <p>İç mekan, sahne ve dış mekan referans projelerimizi keşfedin.</p>
+            <a href="/cases/">Tüm referansları gör <span>›</span></a>
           </div>
-          <div class="tl-compact-links">
-            <a href="/case-commercial-display/"><span>01</span> İç Mekan <em>→</em></a>
-            <a href="/case-rental-staging/"><span>02</span> Kiralama &amp; Sahne <em>→</em></a>
-            <a href="/case-dooh/"><span>03</span> Dış Mekan <em>→</em></a>
+          <div class="tl-mega-groups tl-mega-groups--stack">
+            <section>
+              <a class="tl-group-title" href="/case-commercial-display/">İç Mekan <span>›</span></a>
+              <div class="tl-link-grid tl-link-grid--single">
+                <a href="/case-commercial-display/">AVM ve perakende uygulamaları</a>
+                <a href="/case-commercial-display/">Kurumsal ofis ekranları</a>
+                <a href="/case-commercial-display/">Toplantı salonu çözümleri</a>
+              </div>
+            </section>
+            <section>
+              <a class="tl-group-title" href="/case-rental-staging/">Kiralama &amp; Sahne <span>›</span></a>
+              <div class="tl-link-grid tl-link-grid--single">
+                <a href="/case-rental-staging/">Konser ve festival sahnesi</a>
+                <a href="/case-rental-staging/">Fuar ve etkinlik standı</a>
+                <a href="/case-rental-staging/">Mobil LED kiralama</a>
+              </div>
+            </section>
+            <section>
+              <a class="tl-group-title" href="/case-dooh/">Dış Mekan <span>›</span></a>
+              <div class="tl-link-grid tl-link-grid--single">
+                <a href="/case-dooh/">Billboard ve medya cephe</a>
+                <a href="/case-dooh/">Stadyum ve açık hava ekran</a>
+                <a href="/case-dooh/">Şehir bilgilendirme panosu</a>
+              </div>
+            </section>
           </div>
+          <a class="tl-mega-feature" href="/contact-us/">
+            <img src="/public/wwwroot/media/showroom-ledwall.webp" alt="Toeled LED referans projesi">
+            <span>Projenize özel çözüm</span>
+            <strong>Benzer bir uygulama planlayalım.</strong>
+            <em>İletişime geçin ›</em>
+          </a>
         </div>
       </div>
 
@@ -138,17 +169,49 @@
         <button class="tl-nav-link tl-nav-trigger" type="button" aria-expanded="false" aria-controls="tl-support-menu" data-tl-menu>
           Destek <span aria-hidden="true">⌄</span>
         </button>
-        <div class="tl-mega tl-mega-compact" id="tl-support-menu" aria-hidden="true" data-tl-panel>
-          <div class="tl-compact-copy">
+        <div class="tl-mega tl-mega-panel tl-mega-support" id="tl-support-menu" aria-hidden="true" data-tl-panel>
+          <div class="tl-mega-intro">
             <span class="tl-kicker">SATIŞ SONRASI</span>
             <strong>Kurulumdan servise kesintisiz destek.</strong>
+            <p>Satış noktaları, servis ve teknik yardım tek çatı altında.</p>
+            <a href="/service/">Destek merkezine git <span>›</span></a>
           </div>
-          <div class="tl-compact-links">
-            <a href="/sales-outlets/"><span>01</span> Satış Noktaları <em>→</em></a>
-            <a href="/service/"><span>02</span> Servis <em>→</em></a>
-            <a href="/knowledge/"><span>03</span> Bilgi Merkezi <em>→</em></a>
-            <a href="/debugger/"><span>04</span> Teknik Destek <em>→</em></a>
+          <div class="tl-mega-groups">
+            <section>
+              <a class="tl-group-title" href="/sales-outlets/">Satış Noktaları <span>›</span></a>
+              <div class="tl-link-grid tl-link-grid--single">
+                <a href="/sales-outlets/">Yetkili bayi ağı</a>
+                <a href="/sales-outlets/">Bölgesel satış ofisleri</a>
+              </div>
+            </section>
+            <section>
+              <a class="tl-group-title" href="/service/">Servis <span>›</span></a>
+              <div class="tl-link-grid tl-link-grid--single">
+                <a href="/service/">Garanti ve bakım</a>
+                <a href="/service/">Yedek parça desteği</a>
+              </div>
+            </section>
+            <section>
+              <a class="tl-group-title" href="/knowledge/">Bilgi Merkezi <span>›</span></a>
+              <div class="tl-link-grid tl-link-grid--single">
+                <a href="/knowledge/">Kurulum kılavuzları</a>
+                <a href="/knowledge/">Teknik dokümantasyon</a>
+              </div>
+            </section>
+            <section>
+              <a class="tl-group-title" href="/debugger/">Teknik Destek <span>›</span></a>
+              <div class="tl-link-grid tl-link-grid--single">
+                <a href="/debugger/">Uzaktan arıza tespiti</a>
+                <a href="/one-click-debug/">Tek tıkla debug</a>
+              </div>
+            </section>
           </div>
+          <a class="tl-mega-feature" href="/contact-us/">
+            <img src="/public/wwwroot/media/showroom-istanbul.webp" alt="Toeled teknik destek ekibi">
+            <span>7/24 uzman desteği</span>
+            <strong>Sorunlarınıza hızlı çözüm.</strong>
+            <em>Destek alın ›</em>
+          </a>
         </div>
       </div>
 
@@ -156,16 +219,44 @@
         <button class="tl-nav-link tl-nav-trigger" type="button" aria-expanded="false" aria-controls="tl-news-menu" data-tl-menu>
           Haberler <span aria-hidden="true">⌄</span>
         </button>
-        <div class="tl-mega tl-mega-compact tl-mega-news" id="tl-news-menu" aria-hidden="true" data-tl-panel>
-          <div class="tl-compact-copy">
+        <div class="tl-mega tl-mega-panel tl-mega-news" id="tl-news-menu" aria-hidden="true" data-tl-panel>
+          <div class="tl-mega-intro">
             <span class="tl-kicker">GÜNCEL</span>
             <strong>LED dünyasındaki yenilikleri takip edin.</strong>
+            <p>Kurumsal duyurular, sektör haberleri ve etkinliklerden haberdar olun.</p>
+            <a href="/news/">Tüm haberleri oku <span>›</span></a>
           </div>
-          <div class="tl-compact-links">
-            <a href="/company-news/"><span>01</span> Kurumsal Haberler <em>→</em></a>
-            <a href="/industry-news/"><span>02</span> Sektör Haberleri <em>→</em></a>
-            <a href="/news/"><span>03</span> Tüm Haberler <em>→</em></a>
+          <div class="tl-mega-groups tl-mega-groups--stack">
+            <section>
+              <a class="tl-group-title" href="/company-news/">Kurumsal Haberler <span>›</span></a>
+              <div class="tl-link-grid tl-link-grid--single">
+                <a href="/company-news/">Şirket duyuruları</a>
+                <a href="/company-news/">Fuar ve etkinlikler</a>
+                <a href="/company-news/">Yatırım ve iş birlikleri</a>
+              </div>
+            </section>
+            <section>
+              <a class="tl-group-title" href="/industry-news/">Sektör Haberleri <span>›</span></a>
+              <div class="tl-link-grid tl-link-grid--single">
+                <a href="/industry-news/">LED teknoloji trendleri</a>
+                <a href="/industry-news/">Pazar analizleri</a>
+                <a href="/industry-news/">Sektör gelişmeleri</a>
+              </div>
+            </section>
+            <section>
+              <a class="tl-group-title" href="/news/">Tüm Haberler <span>›</span></a>
+              <div class="tl-link-grid tl-link-grid--single">
+                <a href="/news/">Son yayınlananlar</a>
+                <a href="/news/">Arşiv</a>
+              </div>
+            </section>
           </div>
+          <a class="tl-mega-feature" href="/contact-us/">
+            <img src="/public/wwwroot/media/showroom-lobby.webp" alt="Toeled kurumsal haberler">
+            <span>Bülten ve duyurular</span>
+            <strong>Yeniliklerden ilk siz haberdar olun.</strong>
+            <em>İletişime geçin ›</em>
+          </a>
         </div>
       </div>
 
@@ -181,6 +272,7 @@
 
   <nav class="tl-mobile-nav" id="tl-mobile-menu" aria-label="Mobil menü" hidden data-tl-mobile-nav>
     <div class="tl-mobile-inner">
+      <a href="/">Anasayfa</a>
       <details>
         <summary>Ürünler <span>+</span></summary>
         <div class="tl-mobile-sub">
@@ -194,6 +286,7 @@
       <details>
         <summary>Referanslar <span>+</span></summary>
         <div class="tl-mobile-sub">
+          <a href="/cases/">Tüm Referanslar</a>
           <a href="/case-commercial-display/">İç Mekan</a>
           <a href="/case-rental-staging/">Kiralama &amp; Sahne</a>
           <a href="/case-dooh/">Dış Mekan</a>
@@ -208,10 +301,17 @@
           <a href="/debugger/">Teknik Destek</a>
         </div>
       </details>
-      <a href="/news/">Haberler</a>
+      <details>
+        <summary>Haberler <span>+</span></summary>
+        <div class="tl-mobile-sub">
+          <a href="/company-news/">Kurumsal Haberler</a>
+          <a href="/industry-news/">Sektör Haberleri</a>
+          <a href="/news/">Tüm Haberler</a>
+        </div>
+      </details>
       <a href="/about-us/">Hakkımızda</a>
       <a href="/contact-us/">İletişim</a>
-      <a class="tl-mobile-cta" href="/contact-us/">Projeniz için teklif alın <span>→</span></a>
+      <a class="tl-mobile-cta" href="/contact-us/">Projeniz için teklif alın <span>›</span></a>
     </div>
   </nav>
 </header>
@@ -226,7 +326,7 @@
         <div class="public-nav ">
       <div class="row public-tobody justify-between ov">
         <div class="left items-center" hsm="fadel">
-          <img src="/public/wwwroot/images/icon-home.png" alt="">
+          <img src="/public/wwwroot/images/icon-home.svg" alt="Anasayfa">
           <em>></em>
           <a href="/products/" class="t1">Ürünler</a>
           <em>></em>
@@ -391,16 +491,11 @@
           </div>
         </div>
       </div>
-      <div class="public-footer-num">
-        <p>Copyright &copy; TAHA LED Dış Ticaret A.Ş. · Toeled. Tüm hakları saklıdır.</p>      </div>
     </div>
   </div>
 </footer>
 <!-- 右侧悬浮 -->
 <div class="fixed-b">
-<a href="javascript:;" class="fixed-b-i go-top">
-    <img src="/public/wwwroot/images/kf.png" alt>
-  </a>
   <a href="javascript:;" class="fixed-b-i go-top" id="gotop">
     <img src="/public/wwwroot/images/contact-top.png" alt>
   </a>
