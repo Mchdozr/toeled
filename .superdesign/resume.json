@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "targets": {
+    "/teklif": {
+      "targetKind": "new-in-existing-codebase",
+      "projectId": "3debfd46-2bbe-4328-9590-9d6137559511",
+      "activeDraftId": "25913d7b-6acd-4eaf-aa02-fa28654bcbbf",
+      "designSystemPath": ".superdesign/design-system.md",
+      "referenceIds": [
+        "public-wwwroot-images-logo10.svg",
+        "public-wwwroot-images-logo.svg"
+      ],
+      "brandAssets": {
+        "logo": {
+          "assetKey": "public-wwwroot-images-logo10.svg",
+          "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/3debfd46-2bbe-4328-9590-9d6137559511/brand-assets/public-wwwroot-images-logo10.svg/logo10.svg",
+          "sourcePath": "public/wwwroot/images/logo10.svg"
+        }
+      },
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        ".superdesign/init/theme.md",
+        ".superdesign/init/layouts.md",
+        "contact-us/index.html:456:521"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "56933f16d9b9e335d3c8ef6aefcd61c5188eb8bf4403a7fa1fbf5f2cacd96789",
+        ".superdesign/init/theme.md": "14d9cde9ca66da4a62751e7958562a9562a71f1d737e11ae23fed2fbb8c251a3",
+        ".superdesign/init/layouts.md": "04c74d0a2e3d4310057f7bca5e3ce912431cf181ff761261130b31dc22f88956",
+        "contact-us/index.html": "25b5004ff5bb440c44b251dc2152fbc69ed4936f5ccf47b656b63c5cac6daacc"
+      },
+      "components": [
+        {
+          "name": "SiteHeader",
+          "id": "3f9b90a9-f413-4131-bd99-eb21ad3f4cdb",
+          "sourcePath": "contact-us/index.html",
+          "logoAssetKey": "public-wwwroot-images-logo10.svg"
+        },
+        {
+          "name": "SiteFooter",
+          "id": "d34878ed-01c9-41e8-a575-41b54e0ef333",
+          "sourcePath": "contact-us/index.html",
+          "logoAssetKey": "public-wwwroot-images-logo.svg"
+        }
+      ],
+      "drafts": {
+        "25913d7b-6acd-4eaf-aa02-fa28654bcbbf": {
+          "title": "Toeled — LED Ekran Teklifi Alın",
+          "visualDirection": "navy conversion quote landing",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-09-09T10:50:00.000Z"
+    }
+  }
+}

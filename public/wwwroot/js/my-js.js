@@ -167,6 +167,59 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
     }
 }
 
+(function initToeledMotion() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+    }
+
+    document.documentElement.classList.add("sd-motion");
+
+    if (!document.querySelector('meta[name="view-transition"]')) {
+        var meta = document.createElement("meta");
+        meta.setAttribute("name", "view-transition");
+        meta.setAttribute("content", "same-origin");
+        document.head.appendChild(meta);
+    }
+
+    function activateReveals() {
+        var nodes = document.querySelectorAll("[hsm]");
+        if (!nodes.length || !("IntersectionObserver" in window)) {
+            for (var i = 0; i < nodes.length; i++) {
+                nodes[i].classList.add("in");
+            }
+            return;
+        }
+
+        var groups = document.querySelectorAll(".hsms");
+        for (var g = 0; g < groups.length; g++) {
+            var kids = groups[g].querySelectorAll("[hsm]");
+            for (var k = 0; k < kids.length && k < 8; k++) {
+                kids[k].style.transitionDelay = (k * 0.08) + "s";
+            }
+        }
+
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+                entry.target.classList.add("in");
+                io.unobserve(entry.target);
+            });
+        }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+
+        for (var n = 0; n < nodes.length; n++) {
+            io.observe(nodes[n]);
+        }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", activateReveals);
+    } else {
+        activateReveals();
+    }
+})();
+
 //只允许输入数字
 function checkNumber(e) {
     var keynum = window.event ? e.keyCode : e.which;

@@ -1,0 +1,152 @@
+/* Toeled motion — Superdesign taslağından yerelleştirildi. Yeni Superdesign turu gerekmez. */
+
+html {
+  view-transition-name: root;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: 0.22s ease-out both sd-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 0.28s ease-in 0.06s both sd-fade-in;
+}
+
+@keyframes sd-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes sd-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.sd-motion [hsm] {
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.sd-motion [hsm]:not(.in) {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.sd-motion [hsm="fadel"]:not(.in) {
+  transform: translateX(-28px);
+}
+
+.sd-motion [hsm="fader"]:not(.in) {
+  transform: translateX(28px);
+}
+
+.sd-motion [hsm].in {
+  opacity: 1;
+  transform: none;
+}
+
+nav ul li > a::after {
+  transition: transform 0.4s ease !important;
+}
+
+nav ul li .sub-nav {
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, visibility 0.35s ease, transform 0.35s ease;
+}
+
+nav ul li:hover .sub-nav {
+  transform: translateY(0);
+}
+
+.trans-up:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px -16px rgba(17, 38, 152, 0.4);
+}
+
+.contact-btn,
+.fixed-input-btn,
+.home-swiper-con > .btn1 {
+  background-image: linear-gradient(75deg, #112698 0%, #001584 51%, #112698 100%);
+  background-size: 200% auto;
+  transition: background-position 0.8s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-btn:hover,
+.fixed-input-btn:hover,
+.home-swiper-con > .btn1:hover {
+  background-position: right center;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -8px rgba(17, 38, 152, 0.55);
+  color: #fff;
+}
+
+.home-model1 .row1 .left > p > .h-more,
+.home-model2 .model2-left .h-more {
+  transition: transform 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.home-model1 .row1 .left > p > .h-more:hover,
+.home-model2 .model2-left .h-more:hover {
+  transform: translateX(4px);
+}
+
+.contact-info-i,
+.culture-b-list-i .row,
+.home-model4 .model4-content .model4-content-l,
+.public-footer .contact-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.contact-info-i:hover,
+.culture-b-list-i .row:hover,
+.home-model4 .model4-content .model4-content-l:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -18px rgba(17, 38, 152, 0.35);
+}
+
+.inputs,
+.fixed-input-i .inputs,
+textarea.inputs,
+.fixed-input-i .textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inputs:focus,
+.fixed-input-i .inputs:focus,
+textarea.inputs:focus,
+.fixed-input-i .textarea:focus {
+  border-color: #112698;
+  box-shadow: 0 0 0 3px rgba(17, 38, 152, 0.08);
+  outline: none;
+}
+
+.public-footer .info,
+.public-footer .title {
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.public-footer .info:hover,
+.public-footer .title:hover {
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { view-transition-name: none; }
+
+  .sd-motion [hsm],
+  .sd-motion [hsm]:not(.in),
+  .sd-motion [hsm].in,
+  nav ul li > a::after,
+  nav ul li .sub-nav,
+  .trans-up:hover,
+  .contact-btn,
+  .contact-info-i {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
