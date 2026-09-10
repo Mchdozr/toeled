@@ -955,14 +955,14 @@ body.tl-nav-open {
 }
 
 .home-model2 .model2-left {
-  width: 42%;
-  flex: 1 1 38%;
+  width: 38%;
+  flex: 1 1 34%;
   min-width: 0;
 }
 
 .home-model2 .model2-right {
-  width: 52%;
-  flex: 1 1 48%;
+  width: 56%;
+  flex: 1 1 54%;
   max-width: none;
   margin-left: 0;
   overflow: visible;
@@ -999,14 +999,15 @@ body.tl-nav-open {
 
 .home-model2 .model2-right .model2-cards-swiper .swiper-slide {
   max-width: none !important;
-  max-height: 380px !important;
+  max-height: 480px !important;
   width: 100%;
   height: auto;
 }
 
 .home-model2 .model2-right .model2-cards-swiper .swiper-slide img {
   width: 100%;
-  max-height: 360px;
+  max-height: 460px;
+  min-height: 320px;
   object-fit: cover;
 }
 
@@ -1944,9 +1945,9 @@ body.tl-nav-open {
 .home-model2 .model2-bottom-item .model2-right .model2-cards-swiper {
   overflow: visible;
   width: 100%;
-  max-width: 520px;
+  max-width: 680px;
   margin-left: auto;
-  padding: 12px 56px 12px 48px;
+  padding: 12px 28px 12px 44px;
 }
 
 .home-model2 .model2-cards-swiper.swiper-cards .swiper-slide {
@@ -1969,9 +1970,14 @@ body.tl-nav-open {
 .home-model2 .model2-cards-swiper .swiper-slide img {
   width: 100%;
   height: 100%;
-  max-height: 360px;
+  max-height: 460px;
+  min-height: 320px;
   object-fit: cover;
   display: block;
+}
+
+.home-model2 .model2-right .mySwiper .page-box {
+  right: -32px;
 }
 
 @media (max-width: 900px) {

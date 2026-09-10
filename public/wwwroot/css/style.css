@@ -419,7 +419,7 @@ a:hover {
 .cards-swiper .page-box,
 .home-model2 .model2-right .mySwiper .page-box {
   position: absolute;
-  right: -5px;
+  right: -32px;
   background-color: rgba(0, 0, 0, 0);
   height: 240px;
   width: 50px;
@@ -510,7 +510,7 @@ a:hover {
   font-size: 22px;
   font-weight: bold;
   color: #fff;
-  max-width: 7.4rem;
+  max-width: none;
   background-color: #fff !important;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
   user-select: none;
