@@ -83,45 +83,103 @@ var showmsg = function (msg) {
         });
     }
 }
+
+var TOELED_FORM_ENDPOINT = "https://formsubmit.co/ajax/info@ledajans.com";
+
+function resolveFormSubmitUrl(formObj) {
+    var url = $.trim($(formObj).attr("url") || $(formObj).attr("action") || "");
+    if (!url || url === "#" || url.indexOf("#") === 0) {
+        return TOELED_FORM_ENDPOINT;
+    }
+    return url;
+}
+
+function normalizeFormSubmitResponse(data) {
+    if (data && typeof data.status !== "undefined") {
+        return data;
+    }
+    if (data && data.success) {
+        return {
+            status: 1,
+            msg: "Mesajınız alındı. En kısa sürede dönüş yapacağız."
+        };
+    }
+    if (data && data.message) {
+        return {
+            status: 1,
+            msg: data.message
+        };
+    }
+    return {
+        status: 0,
+        msg: "Mesaj gönderilemedi. Lütfen tekrar deneyin."
+    };
+}
+
+function setSubmitButtonLabel(btnObj, text) {
+    var $btn = $(btnObj);
+    if ($btn.is("input")) {
+        $btn.val(text);
+    } else {
+        $btn.text(text);
+    }
+}
+
+function getSubmitButtonLabel(btnObj) {
+    var $btn = $(btnObj);
+    if ($btn.is("input")) {
+        return $btn.val();
+    }
+    return $btn.text();
+}
+
 function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
-    var argNum = arguments.length; //参数个数    
+    var argNum = arguments.length;
+    var defaultBtnLabel = getSubmitButtonLabel(btnObj);
+
     $(formObj).Validform({
         tiptype: 3,
         callback: function (form) {
-            //AJAX提交表单
-            $(form).ajaxSubmit({
-                beforeSubmit: formRequest,
-                success: formResponse,
-                error: formError,
-                url: $(formObj).attr("url"),
-                type: "post",
+            var submitUrl = resolveFormSubmitUrl(formObj);
+            var payload = $(form).serializeArray();
+
+            if (submitUrl.indexOf("formsubmit.co") !== -1) {
+                payload.push({ name: "_subject", value: "Toeled - İletişim Formu" });
+                payload.push({ name: "_captcha", value: "false" });
+                payload.push({ name: "_template", value: "table" });
+                payload.push({ name: "_form", value: $(formObj).attr("id") || "contact" });
+            }
+
+            setSubmitButtonLabel(btnObj, "Gönderiliyor...");
+            $(btnObj).prop("disabled", true);
+
+            $.ajax({
+                url: submitUrl,
+                type: "POST",
+                data: $.param(payload),
                 dataType: "json",
-                timeout: 60000
+                timeout: 60000,
+                success: function (data, textStatus) {
+                    formResponse(normalizeFormSubmitResponse(data), textStatus);
+                },
+                error: formError
             });
             return false;
         }
     });
 
-    //表单提交前
-    function formRequest(formData, jqForm, options) {
-        $(btnObj).prop("disabled", true);
-        $(btnObj).val("提交中...");
-    }
-
-    //表单提交后
     function formResponse(data, textStatus) {
         $(btnObj).prop("disabled", false);
         if (argNum == 5) {
             callback();
         }
         if (data.status == 1) {
-            $(btnObj).val("提交成功");
-            //是否提示，默认不提示
+            setSubmitButtonLabel(btnObj, "Gönderildi");
             if (isDialog == 1) {
                 swal({
                     title: data.msg,
                     icon: "success",
-                }).then(function (value) {
+                }).then(function () {
                     if (data.url) {
                         location.href = data.url;
                     } else if ($(urlObj) && $(urlObj).length > 0) {
@@ -130,7 +188,6 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
                         location.reload();
                     }
                 });
-
             } else {
                 if (data.url) {
                     location.href = data.url;
@@ -140,30 +197,29 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
                     location.reload();
                 }
             }
-        }
-        else {
+        } else {
             swal({
                 title: data.msg,
                 icon: "warning"
-            }).then(function (value) {
+            }).then(function () {
                 if (data.url) {
                     location.href = data.url;
                 }
             });
-            $(btnObj).val("重新提交");
+            setSubmitButtonLabel(btnObj, defaultBtnLabel);
         }
     }
-    //表单提交出错
+
     function formError(XMLHttpRequest, textStatus, errorThrown) {
         swal({
-            title: 'Status：' + textStatus + '；Tips：' + errorThrown,
+            title: "Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin veya info@ledajans.com adresine yazın.",
             icon: "error"
         });
         if (argNum == 5) {
             callback();
         }
         $(btnObj).prop("disabled", false);
-        $(btnObj).val("重新提交");
+        setSubmitButtonLabel(btnObj, defaultBtnLabel);
     }
 }
 
@@ -298,6 +354,7 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
                     mobileToggle.setAttribute("aria-expanded", "false");
                     mobileToggle.setAttribute("aria-label", "Menüyü aç");
                     document.body.classList.remove("tl-nav-open");
+                    header.classList.remove("tl-nav-open");
                     mobileToggle.focus();
                 }
             }
