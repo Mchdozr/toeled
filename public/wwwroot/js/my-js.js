@@ -310,6 +310,7 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
                 mobileToggle.setAttribute("aria-expanded", String(opening));
                 mobileToggle.setAttribute("aria-label", opening ? "Menüyü kapat" : "Menüyü aç");
                 document.body.classList.toggle("tl-nav-open", opening);
+                header.classList.toggle("tl-nav-open", opening);
             });
 
             mobileNav.querySelectorAll("a").forEach(function (link) {
@@ -317,9 +318,23 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
                     mobileNav.hidden = true;
                     mobileToggle.setAttribute("aria-expanded", "false");
                     document.body.classList.remove("tl-nav-open");
+                    header.classList.remove("tl-nav-open");
                 });
             });
         }
+
+        var hasHeroUnderHeader = !!document.querySelector("main > .home-swiper, main > .public-banner, main > .swiper.home-swiper");
+        if (hasHeroUnderHeader) {
+            header.classList.add("tl-header-over-media");
+        }
+
+        function updateHeaderOnScroll() {
+            var atTop = window.scrollY <= 12;
+            header.classList.toggle("is-at-top", atTop);
+        }
+
+        updateHeaderOnScroll();
+        window.addEventListener("scroll", updateHeaderOnScroll, { passive: true });
 
         window.addEventListener("resize", function () {
             if (window.innerWidth > 1024 && mobileNav && !mobileNav.hidden) {
