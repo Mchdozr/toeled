@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="/public/wwwroot/css/plugin.css">
 <link rel="stylesheet" href="/public/wwwroot/css/layout.css?v=1.0.0">
 <link rel="stylesheet" href="/public/wwwroot/css/style.css?v=1.0.0">
-<link rel="stylesheet" href="/public/wwwroot/css/motion.css?v=1.1.13">
+<link rel="stylesheet" href="/public/wwwroot/css/motion.css?v=1.1.14">
 <link rel="stylesheet" href="/public/wwwroot/css/swiper-bundle.min.css">
 <link rel="shortcut icon" href="/9thpanel.ico" />
 <script src="/public/wwwroot/js/plugin.js"></script>
@@ -665,7 +665,7 @@
                                 </div>
                             </div>
                             <div class="model2-right">
-                                <div class="swiper mySwiper1 mySwiper">
+                                <div class="swiper model2-cards-swiper cards-swiper mySwiper">
                                     <div class="swiper-wrapper">
                                                                                     <div class="swiper-slide  img-scale">
                                                 <img src="/public/wwwroot/media/product-modular-cabinets-b6353441.jpg" alt="HS Holografik Ekran">
@@ -733,7 +733,7 @@
                                 </div>
                             </div>
                             <div class="model2-right">
-                                <div class="swiper mySwiper1 mySwiper">
+                                <div class="swiper model2-cards-swiper cards-swiper mySwiper">
                                     <div class="swiper-wrapper">
                                                                                     <div class="swiper-slide  img-scale">
                                                 <img src="/public/wwwroot/media/rental-concert-stage-84bd91a8.jpg" alt="RW Serisi">
@@ -792,7 +792,7 @@
                                 </div>
                             </div>
                             <div class="model2-right">
-                                <div class="swiper mySwiper1 mySwiper">
+                                <div class="swiper model2-cards-swiper cards-swiper mySwiper">
                                     <div class="swiper-wrapper">
                                                                                     <div class="swiper-slide  img-scale">
                                                 <img src="/public/wwwroot/media/outdoor-billboard-day-f8556145.jpg" alt="Dış Mekan Q Serisi">
@@ -851,7 +851,7 @@
                                 </div>
                             </div>
                             <div class="model2-right">
-                                <div class="swiper mySwiper1 mySwiper">
+                                <div class="swiper model2-cards-swiper cards-swiper mySwiper">
                                     <div class="swiper-wrapper">
                                                                                     <div class="swiper-slide  img-scale">
                                                 <img src="/public/wwwroot/media/rental-flight-cases-fd0c4e92.jpg" alt="QM Serisi">
@@ -1309,60 +1309,50 @@
                 if ($(e.target).closest('a.tab-chip').length) {
                     e.preventDefault();
                 }
-                let fIndex = $(this).index()
                 $(this).addClass('active').siblings().removeClass('active');
-                $('.model2-bottom .model2-bottom-item').eq($(this).index()).addClass('cur').siblings().removeClass('cur')
-                $('.model2-bottom .model2-bottom-item').each(function(index, element) {
-                    if (fIndex == index) {
-                        let swiperNum = index + 1
-                        var swiperinfo1 = new Swiper(`.model2-Swiper-info${swiperNum}`, {
+                $('.model2-bottom .model2-bottom-item').eq($(this).index()).addClass('cur').siblings().removeClass('cur');
+            });
 
-                        });
-                        var swiperinfo2 = new Swiper(`.mySwiper${swiperNum}`, {
-                            effect: "slide",
-                            grabCursor: true,
-                            centeredSlides: true,
-                            slidesPerView: 'auto',
-                            spaceBetween: 16,
-                            on: {
-                                slideChange: function() {
-                                    swiperinfo1.slideTo(this.activeIndex, 500)
-
-                                },
-                            },
-                            parallax: true,
-                            navigation: {
-                                nextEl: `.mySwiper .swiper-button-next`,
-                                prevEl: `.mySwiper .swiper-button-prev`,
-                            },
-
-                        });
+            (function initHomeModel2Cards() {
+                document.querySelectorAll('.home-model2 .model2-bottom-item').forEach(function(panel) {
+                    var infoEl = panel.querySelector('.model2-left .swiper');
+                    var cardsEl = panel.querySelector('.model2-cards-swiper');
+                    if (!infoEl || !cardsEl || cardsEl.dataset.cardsReady === '1') {
+                        return;
                     }
-                })
-            });
 
-            var swiperinfo1 = new Swiper(`.model2-Swiper-info1`, {
+                    var infoSwiper = new Swiper(infoEl, {
+                        allowTouchMove: false,
+                        effect: 'fade',
+                        fadeEffect: { crossFade: true },
+                        speed: 500,
+                    });
 
-            });
-            var swiperinfo2 = new Swiper(`.mySwiper1`, {
-                effect: "slide",
-                grabCursor: true,
-                centeredSlides: true,
-                slidesPerView: 'auto',
-                spaceBetween: 16,
-                on: {
-                    slideChange: function() {
-                        swiperinfo1.slideTo(this.activeIndex, 500)
+                    var cardsSwiper = new Swiper(cardsEl, {
+                        effect: 'cards',
+                        grabCursor: true,
+                        speed: 500,
+                        cardsEffect: {
+                            slideShadows: false,
+                            rotate: false,
+                            perSlideOffset: 14,
+                        },
+                        navigation: {
+                            nextEl: cardsEl.querySelector('.swiper-button-next'),
+                            prevEl: cardsEl.querySelector('.swiper-button-prev'),
+                        },
+                        on: {
+                            slideChange: function() {
+                                infoSwiper.slideTo(this.activeIndex, 500);
+                            },
+                        },
+                    });
 
-                    },
-                },
-                parallax: true,
-                navigation: {
-                    nextEl: `.mySwiper .swiper-button-next`,
-                    prevEl: `.mySwiper .swiper-button-prev`,
-                },
-
-            });
+                    cardsEl.dataset.cardsReady = '1';
+                    cardsEl.model2CardsSwiper = cardsSwiper;
+                    cardsEl.model2InfoSwiper = infoSwiper;
+                });
+            })();
 
             $('.home-model4 .btn-item').on('click', function () {
                 $(this).addClass('active').siblings().removeClass('active');
