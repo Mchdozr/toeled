@@ -84,7 +84,7 @@ var showmsg = function (msg) {
     }
 }
 
-var TOELED_FORM_ENDPOINT = "https://formsubmit.co/ajax/info@ledajans.com";
+var TOELED_FORM_ENDPOINT = "https://formsubmit.co/ajax/27b2b070cc82ecd5ca4551f50d145bba";
 
 function resolveFormSubmitUrl(formObj) {
     var url = $.trim($(formObj).attr("url") || $(formObj).attr("action") || "");
