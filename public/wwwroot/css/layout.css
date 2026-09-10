@@ -1059,16 +1059,11 @@ nav ul li:hover .sub-nav {
 
 .home-swiper .swiper-slide .home-swiper-img {
     width: 100%;
-    height: auto;
+    height: 100%;
     min-height: 100%;
-    transition: 1s linear 2s;
-    transform: scale(1.1);
-}
-
-.home-swiper .swiper-slide.swiper-slide-active .home-swiper-img,
-.home-swiper .swiper-slide.swiper-slide-duplicate-active .home-swiper-img {
-    transition: 6s linear;
-    transform: scale(1);
+    object-fit: cover;
+    object-position: center;
+    transform: none;
 }
 
 .swiper-pagination-icon span {
