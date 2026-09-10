@@ -997,15 +997,17 @@ body.tl-nav-open {
   font-weight: 700;
 }
 
-.home-model2 .model2-right .swiper-slide {
+.home-model2 .model2-right .model2-cards-swiper .swiper-slide {
   max-width: none !important;
   max-height: 380px !important;
+  width: 100%;
+  height: auto;
 }
 
-.home-model2 .model2-right .swiper-slide img {
+.home-model2 .model2-right .model2-cards-swiper .swiper-slide img {
   width: 100%;
   max-height: 360px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .home-model2 .model2-top {
