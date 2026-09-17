@@ -13,6 +13,7 @@ from apply_quality_rebuild import (
     set_main,
     write_page,
 )
+from series_extra import EXTRA, pack
 
 ROOT = __import__("pathlib").Path(__file__).resolve().parents[1]
 
@@ -106,539 +107,50 @@ CAT_MORE = {
 }
 
 
-EXTRA = {
-    "cms-series-crystal-film-display": dict(
-        body=[
-            "CMS kristal film, camı kapatmadan LED yayın yapmanız gereken vitrin, showroom cephesi ve atrium camlarında kullanılır. Film kalınlığı düşüktür; mevcut cephe statik yükünü ciddi artırmaz.",
-            "Gündüz vitrin stoğu görünür kalır, gece ise yüksek kontrastlı içerik öne çıkar. Toeled keşifte cam tipi, yapıştırma yönü, güç noktası ve uzaktan yayın senaryosunu aynı tutanakta toplar.",
-        ],
-        uses=[
-            (f"{M}/hero-crystal-film.jpg", "Mağaza vitrini", "Cam arkasındaki ürün görünür; film gece reklam duvarına dönüşür."),
-            (f"{M}/indoor-crystal-film-b4d899d5.jpg", "Showroom cephe", "Şişli ve marka deneyim alanlarında ince film uygulama."),
-            (f"{M}/banner-indoor.jpg", "Lobi camı", "Otel ve plaza giriş camında şeffaf bilgi bandı."),
-        ],
-        feats=[
-            ("Yüksek şeffaflık", "Camı kapatmadan gece-gündüz içerik yayınlar. İzleyici vitrin stoğunu ve LED’i aynı anda görür; perakende ve otomotiv showroom’da stok kaybı olmaz."),
-            ("İnce film yapı", "Mevcut cam cepheye düşük yükle uygulanır. Ağır kabin askısı gerekmez; keşifte cam kalınlığı ve silikon/laminasyon detayı netleşir."),
-            ("Canlı renk", "Vitrin reklamında yüksek kontrast. Gündüz düşük parlaklık profili, gece yüksek nit ile aynı içerik okunur kalır."),
-            ("Kolay servis", "Modüler tamir, kısa kesinti. Hasarlı şerit sökülüp yenisiyle değiştirilir; tüm cepheyi yenilemeniz gerekmez."),
-        ],
-        specs=[
-            ("Piksel aralığı", "4 / 5 / 6 / 8 / 10 mm"),
-            ("Kullanım", "İç mekan cam, vitrin, atrium"),
-            ("Şeffaflık", "Yüksek; cam stoğu görünür"),
-            ("Kurulum", "Film / cam yüzeyi, düşük yük"),
-            ("Kontrol", "Uzaktan içerik, zamanlayıcı"),
-            ("Garanti", "2 yıl parça ve işçilik"),
-        ],
-    ),
-    "hs-series-holographic-display": dict(
-        body=[
-            "HS holografik mesh, ürünün arkada durduğu lansman, deneyim odası ve sahne önünde derinlik hissi verir. Perde şeffaftır; ışık ve sahne dekoru LED’in arkasından okunur.",
-            "Askı ve truss kurulumuna uygun hafif kabinle fuar ve lansmanda aynı gece kurulur. Kamera çekiminde yüksek yenileme titremeyi keser.",
-        ],
-        uses=[
-            (f"{M}/product-holographic.jpg", "Ürün lansmanı", "Otomotiv ve tüketici elektroniği sahnesinde 3B his."),
-            (f"{M}/hero-rental-stage.jpg", "Sahne perdesi", "Konser ve TV çekiminde arkası görünen LED perde."),
-            (f"{M}/hero-crystal-film.jpg", "Deneyim alanı", "Marka pop-up’ta ürünün önünde uçan içerik."),
-        ],
-        feats=[
-            ("Mesh yapı", "Arkası görünen şeffaf LED perde. Sahne ışığı ve ürün silüeti kaybolmaz; holografik etki içerikten gelir."),
-            ("Sahne etkisi", "Lansman ve deneyim odalarında 3B his. İçerik siyah zeminle çalışınca nesne havada duruyor gibi okunur."),
-            ("Hafif kabin", "Askı ve truss kurulumuna uygun. Fuar standında zemin yükünü düşürür, söküm hızlanır."),
-            ("Yüksek yenileme", "Kamera çekiminde titreme yok. 3840 Hz+ sınıfı yayın ve sosyal medya kaydı için uygundur."),
-        ],
-        specs=[
-            ("Piksel aralığı", "3.9 / 6.2 / 10.4 mm"),
-            ("Kullanım", "İç mekan sahne / deneyim"),
-            ("Yapı", "Holografik mesh perde"),
-            ("Refresh", "3840 Hz+"),
-            ("Kurulum", "Askı / truss / frame"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "q-mini-series": dict(
-        body=[
-            "Q Mini, dar niş ve toplantı odalarına sığan kompakt kabinli fine pitch ailedir. 1.2–1.8 mm aralığı 3–6 m izleme mesafesinde keskin görüntü verir.",
-            "Sessiz soğutma ofis standartlarına uyar. LEDAJANS keşifte oturma düzeni, native çözünürlük ve kontrol odası mesafesini ölçüp pitch önerir.",
-        ],
-        uses=[
-            (f"{M}/hero-cob-module.jpg", "Toplantı odası", "Yakın masa düzeninde okunur slayt ve video."),
-            (f"{M}/banner-indoor.jpg", "Kontrol nişi", "Küçük kabinle dar duvar ve kolon giydirme."),
-            (f"{M}/indoor-corporate-lobby-3c5ebf5e.jpg", "Lobi demosu", "Showroom’da müşteriye canlı pitch karşılaştırması."),
-        ],
-        feats=[
-            ("İnce pitch", "Yakın izleme mesafesinde keskin görüntü. 4 m oturma için 1.5 mm sınıfı; slayt metni piksel piksel okunur."),
-            ("Küçük kabin", "Dar niş ve toplantı odasına sığar. Klasik 500 mm kabinden daha esnek kesim ve köşe birleşimi."),
-            ("Sessiz çalışma", "Ofis ortamına uygun termal tasarım. Fan gürültüsü toplantıyı bölmez."),
-            ("16 bit gri", "Düşük parlaklıkta homojenlik. Karartılmış salonda bantlaşma olmaz."),
-        ],
-        specs=[
-            ("Piksel aralığı", "1.2 / 1.5 / 1.8 mm"),
-            ("Kullanım", "İç mekan sabit, toplantı"),
-            ("Refresh", "3840 Hz"),
-            ("Kabin", "Mini die-cast"),
-            ("Servis", "Ön bakım opsiyonu"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "nc-series": dict(
-        body=[
-            "NC COB, LED çipin yüzeyde kapsüllendiği darbeye dayanıklı fine pitch’tir. Stüdyo, lobi ve yakın izleme duvarlarında parmak izi ve çarpma SMD’ye göre daha az iz bırakır.",
-            "Ortak anot/katot seçenekleri ısıyı düşürür. Yayın kameralarında siyah seviyesi ve 7/24 çalışma profili teklife yazılır.",
-        ],
-        uses=[
-            (f"{M}/hero-cob-module.jpg", "Yayın stüdyosu", "Kamera önünde COB yüzey, düşük yansıma."),
-            (f"{M}/indoor-corporate-lobby-3c5ebf5e.jpg", "Kurumsal lobi", "Yakın yürüyüş mesafesinde darbeye dayanıklı duvar."),
-            (f"{M}/banner-indoor.jpg", "Toplantı salonu", "NC 1.2 ile 12 m² sınıfı kurumsal ekran."),
-        ],
-        feats=[
-            ("COB yüzey", "Çarpma ve toza karşı korumalı modül. Lobi ve stüdyoda SMD’ye göre daha az ölü piksel riski."),
-            ("Enerji profili", "Düşük ısı, yüksek verim. 7/24 duvarda soğutma ve elektrik faturası keşifte hesaplanır."),
-            ("Stüdyo uyumu", "Yayın kameralarında siyah seviyesi. Yüksek refresh ile rolling shutter titremesi kesilir."),
-            ("Uzun ömür", "Tek tip LED seçimi. Renk kayması batch kontrolüyle sınırlanır."),
-        ],
-        specs=[
-            ("Piksel aralığı", "0.9 / 1.2 mm"),
-            ("Paket", "COB"),
-            ("Kullanım", "Stüdyo, lobi, yakın izleme"),
-            ("Koruma", "Darbeye dayanıklı yüzey"),
-            ("Refresh", "3840–7680 Hz sınıfı"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "indoor-q-series": dict(
-        body=[
-            "İç Mekan Q, ofis, fuar, stüdyo ve perakendede en çok tercih edilen sabit LED ailesidir. Q0.8–Q4 aralığı aynı kabin diliminde ince pitch’ten genel lobi duvarına kadar çıkar.",
-            "PWM sürücü, 16 bit gri ve tek batch LED ile renk duvar boyunca homojen kalır. İstanbul showroom’da 1.8 ve 2.5 mm örnekleri yan yana izlenir; keşifte izleme mesafesi ölçülüp pitch kilitlenir.",
-        ],
-        uses=[
-            (f"{M}/indoor-corporate-lobby-3c5ebf5e.jpg", "Otel ve plaza lobisi", "Gündüz okunur karşılama ve içerik duvarı."),
-            (f"{M}/banner-indoor.jpg", "Kurumsal toplantı", "Native çözünürlüğe uygun slayt ve video."),
-            (f"{M}/indoor-mall-atrium-8903fa23.jpg", "Perakende atrium", "AVM ve marka duvarında geniş açı."),
-        ],
-        feats=[
-            ("Dinamik enerji", "PWM sürücü ve akıllı karartma ile tasarruf. Ofiste gündüz düşük nit, lansmanda kısa süreli yüksek parlaklık aynı duvarda yönetilir."),
-            ("Yüksek yenileme", "Titreşimsiz, kamera dostu görüntü. Fuar ve stüdyo çekimlerinde 3840–7680 Hz sınıfı tercih edilir."),
-            ("Geniş gri ton", "Düşük ışıklı sahnede detay. 16 bit işleme karanlık salon ve lobi akşamında bantlaşmayı keser."),
-            ("Tek batch LED", "Renk ve parlaklık homojenliği. Çoklu duvar ve ekspansiyonlarda kalibrasyon dosyası teslim edilir."),
-        ],
-        specs=[
-            ("Piksel aralığı", "0.8 – 4 mm (Q ailesi)"),
-            ("Kullanım", "İç mekan sabit duvar"),
-            ("Refresh", "3840–7680 Hz"),
-            ("Gri ton", "16 bit"),
-            ("Servis", "Ön / arka bakım seçenekli"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "pdc-series": dict(
-        body=[
-            "PDC Pro, komuta-kontrol ve 7/24 çalışan toplantı duvarları için yüksek doluluklu fine pitch’tir. 0.9 / 1.2 / 1.5 mm Pro seçenekleri dar koridorda önden servis görür.",
-            "Parlaklık profili gece-gündüz ayrı kurgulanır. Isınma, yedek PSU ve sinyal yedekliliği keşif tutanağına yazılır.",
-        ],
-        uses=[
-            (f"{M}/banner-indoor.jpg", "Kontrol odası", "7/24 harita ve kamera duvarı."),
-            (f"{M}/hero-cob-module.jpg", "Kriz masası", "Yakın oturmada Pro pitch."),
-            (f"{M}/indoor-hotel-reception-bf0db49.jpg", "Resepsiyon bilgi", "Düşük gürültü, sürekli yayın."),
-        ],
-        feats=[
-            ("7/24 çalışma", "Kontrol odası parlaklık profili. Pixel shift ve zamanlayıcı önerilir; panel ömrü teklifte hesaplanır."),
-            ("Pro pitch", "0.9 / 1.2 / 1.5 mm. Operatör 2–4 m’de oturuyorsa 0.9–1.2 öne çıkar."),
-            ("Servis önden", "Dar koridorlarda bakım. Arkası duvara yaslı nişlerde kritikdir."),
-            ("Düşük ısınma", "Sessiz soğutma. Kontrol odası HVAC yükü keşifte paylaşılır."),
-        ],
-        specs=[
-            ("Piksel aralığı", "0.9 / 1.2 / 1.5 mm Pro"),
-            ("Kullanım", "Kontrol / toplantı 7/24"),
-            ("Servis", "Ön bakım"),
-            ("Sinyal", "Yedekli kontrol önerilir"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "mk-series": dict(
-        body=[
-            "MK, kavis ve 90° köşe birleşimleri gereken perakende ve atrium işlerindedir. Manyetik modül sökümü vitrin ve fuar standında süreyi kısaltır.",
-            "İçbükey-dışbükey yarıçap keşifte maketle doğrulanır. LEDAJANS köşe kitini ve yedek modülü aynı sevkiyatta planlar.",
-        ],
-        uses=[
-            (f"{M}/indoor-mall-atrium-8903fa23.jpg", "AVM atrium", "Kavisli marka duvarı."),
-            (f"{M}/indoor-corporate-lobby-3c5ebf5e.jpg", "Plaza köşe", "Kesintisiz 90° dönüş."),
-            (f"{M}/case-mall-facade.jpg", "Perakende vitrin", "Manyetik modülle vitrin içi bakım."),
-        ],
-        feats=[
-            ("Kavis", "İçbükey-dışbükey duvar. Yarıçap ve izleme açısı keşifte çizilir."),
-            ("Köşe birleşim", "Kesintisiz 90° dönüş. İki duvar tek içerik gibi okunur."),
-            ("Perakende", "AVM atrium ve marka duvarı. Geniş açı oturma ve yürüyüş aksına göre pitch seçilir."),
-            ("Hızlı kurulum", "Manyetik modül. Gece vitrin bakımında tornavida turu kısalır."),
-        ],
-        specs=[
-            ("Uygulama", "Kavis / köşe"),
-            ("Kullanım", "İç mekan perakende"),
-            ("Montaj", "Manyetik modül"),
-            ("Servis", "Ön söküm"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "indoor-r-series": dict(
-        body=[
-            "İç Mekan R, toplantı, eğitim ve kamu projelerinde sabit kabin ailesidir. Duvar ve zemin sehpa senaryoları aynı seri içinde çözülür.",
-            "Çoklu duvar renk eşlemesi ve Türkiye yedek parça stoğu ihalelerde teslim süresini öngörülebilir kılar.",
-        ],
-        uses=[
-            (f"{M}/indoor-corporate-lobby-3c5ebf5e.jpg", "Eğitim salonu", "Geniş açı, slayt ve video."),
-            (f"{M}/banner-indoor.jpg", "Kamu toplantı", "Stabil kabin, ön bakım."),
-            (f"{M}/showroom-istanbul.webp", "Demo duvar", "Showroom’da R ve Q karşılaştırması."),
-        ],
-        feats=[
-            ("Kurumsal", "Toplantı ve eğitim salonları. Native çözünürlük slayt şablonuna yazılır."),
-            ("Stabil kabin", "Duvar ve zemin sehpa. İhale şartnamesindeki askı/duvar maddesi karşılanır."),
-            ("Renk kalibrasyonu", "Çoklu duvar eşlemesi. Kampüs ve salon setlerinde aynı profil."),
-            ("Yedek parça", "Türkiye stoklu servis. Arıza kaydı İstanbul tekniğe düşer."),
-        ],
-        specs=[
-            ("Kullanım", "İç mekan sabit"),
-            ("Senaryo", "Toplantı / eğitim / kamu"),
-            ("Servis", "TR yedek parça"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "cs-series": dict(
-        body=[
-            "CS, sinema ve karanlık salon izleme için yüksek kontrast iç mekan duvarıdır. Siyah seviyesi ve sessiz soğutma salon gürültü eşiğinin altında kalır.",
-            "Geniş açı, yan oturma sıralarında renk kaymasını sınırlar. HDR içerik işleme keşifte oynatıcı ve LED işlemciyle birlikte seçilir.",
-        ],
-        uses=[
-            (f"{M}/indoor-hotel-reception-bf0db49.jpg", "Özel salon", "Karanlık izleme, yüksek kontrast."),
-            (f"{M}/hero-indoor-led.jpg", "Kurumsal sinema", "Geniş açı oturma."),
-            (f"{M}/banner-indoor.jpg", "Deneyim odası", "Sessiz, HDR uyumlu duvar."),
-        ],
-        feats=[
-            ("Yüksek kontrast", "Karanlık salonlarda siyah seviyesi. Film ve marka filmi detayı kaybolmaz."),
-            ("Geniş açı", "Salon oturma düzenine uygun. Yan sıra izleyicide renk sapması sınırlıdır."),
-            ("Sessiz", "Sinema salonu gürültü eşiği. Fan profili keşifte ölçülür."),
-            ("İçerik", "HDR uyumlu işleme. Oynatıcı ve işlemci aynı teklifte eşlenir."),
-        ],
-        specs=[
-            ("Kullanım", "Sinema / salon"),
-            ("Kontrast", "Yüksek"),
-            ("Kullanım yeri", "İç mekan karanlık salon"),
-            ("Ses", "Düşük gürültü soğutma"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "n-series": dict(
-        body=[
-            "N serisi, yayın ve stüdyo için dar pitch duvar ve opsiyonel LED zemin ailesidir. Yakın kamera çekiminde modül eşlemesi ve kalibrasyon teslim kriteridir.",
-            "Zemin seçeneği yürüyüş yükü ve IP sınıfıyla ayrıca keşfedilir. Stüdyo ısısı ve kamera shutter değerleri teklif notuna yazılır.",
-        ],
-        uses=[
-            (f"{M}/hero-cob-module.jpg", "TV stüdyosu", "Yakın çekim, dar pitch."),
-            (f"{M}/hero-indoor-led.jpg", "LED zemin", "Floor opsiyonu, yük hesabı."),
-            (f"{M}/indoor-mall-atrium-2c3839d5.jpg", "Yayın dekor", "Duvar + zemin tek sahne."),
-        ],
-        feats=[
-            ("Yayın", "Stüdyo kamera uyumu. Refresh ve shutter birlikte seçilir."),
-            ("Dar pitch", "Yakın çekim. Sunucu 1–2 m’de durunca N / COB öne çıkar."),
-            ("Zemin seçeneği", "LED floor opsiyonu. Yük, derz ve temizlik prosedürü ayrı maddedir."),
-            ("Kalibrasyon", "Modül eşleme. Teslimde ölçüm raporu verilir."),
-        ],
-        specs=[
-            ("Kullanım", "Stüdyo / yayın"),
-            ("Pitch", "Fine / N serisi"),
-            ("Opsiyon", "LED zemin"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "rw-series": dict(
-        body=[
-            "RW, iç-dış rental kabindir. 2.6 / 2.9 iç, 3.9 dış sınıfları konser ve turda aynı kilit diliyle çalışır. Eğim (curve), uçuş kasası ve yüzde 5–10 yedek modül kiralama paketinin parçasıdır.",
-            "Aynı gece kurulum-söküm için kilit pimi ve power/data loop keşif formunda çizilir. Jeneratör gücü ve truss yükü LEDAJANS saha ekibiyle netleşir.",
-        ],
-        uses=[
-            (f"{M}/hero-rental-stage.jpg", "Konser ana ekran", "80 m² sınıfı açık hava."),
-            (f"{M}/rental-concert-stage-84bd91a8.jpg", "Festival", "İç-dış karışık set."),
-            (f"{M}/rental-flight-cases-fd0c4e92.jpg", "Tur lojistiği", "Flight case ve yedek modül."),
-        ],
-        feats=[
-            ("Hızlı kilit", "Curving ve düz duvar aynı gece. Pim ve açı takozu saha çantasında gelir."),
-            ("İç-dış", "2.6 / 2.9 iç, 3.9 dış. Yağmurda IP sınıfı dış kabin seçilir."),
-            ("Flight case", "Tur lojistiğine uygun. Kasa etiketleme ve envanter teslimde paylaşılır."),
-            ("Yüksek refresh", "Yayın ve konser kamerası. IMAG ve ana duvar aynı işlemci diliminde çalışır."),
-        ],
-        specs=[
-            ("Piksel aralığı", "2.6 / 2.9 / 3.9 mm"),
-            ("Kullanım", "Rental iç / dış"),
-            ("Kabin", "Hızlı kilit"),
-            ("Yedek", "Modül %5–10 önerilir"),
-            ("Garanti", "Kiralama süresi + servis"),
-        ],
-    ),
-    "cg-series": dict(
-        body=[
-            "CG, hafif rental kabindir; truss askı ve zemin stack’te yükü düşürür. Fuar standında üç cephe duvar iki günde kurulur, gece sökülür.",
-            "Hot-swap modül sahada dakika içinde değişir. LEDAJANS yedek seti stand planına işler.",
-        ],
-        uses=[
-            (f"{M}/banner-rental.jpg", "Fuar standı", "Üç cephe, iki gün kurulum."),
-            (f"{M}/rental-exhibition-booth-326747a9.jpg", "Marka pop-up", "Hafif askı, hızlı söküm."),
-            (f"{M}/rental-flight-cases-e7055c60.jpg", "Lojistik", "Kasa ve yedek set."),
-        ],
-        feats=[
-            ("Hafif", "Askı yükünü düşürür. Truss hesabı keşifte paylaşılır."),
-            ("Fuar", "Stand üç cephe duvar. Köşe ve kapı boşlukları plana işlenir."),
-            ("Hızlı söküm", "Gece kurulum. Fuar yönetmeliği saatine uyum."),
-            ("Yedek", "Sahada hot-swap modül. Envanter listesi teslimde imzalanır."),
-        ],
-        specs=[
-            ("Kullanım", "Rental / fuar"),
-            ("Ağırlık", "Hafif kabin"),
-            ("Kurulum", "Stack / fly"),
-            ("Garanti", "Proje bazlı"),
-        ],
-    ),
-    "ln-series": dict(
-        body=[
-            "LN, lineer sahne LED’idir: ana ekran, kanat ve IMAG aynı ailede uzar. Açık hava festivalde IP opsiyonu seçilir.",
-            "Stack ve fly senaryosu rüzgar ve truss yüküyle birlikte hesaplanır. Otomotiv lansmanında 40 m² sınıfı örnek referanslarımızdadır.",
-        ],
-        uses=[
-            (f"{M}/rental-concert-stage-84bd91a8.jpg", "Ana sahne", "Konser IMAG ve backdrop."),
-            (f"{M}/hero-rental-stage.jpg", "Kanat uzatma", "Lineer ek paneller."),
-            (f"{M}/banner-outdoor.jpg", "Açık hava", "IP opsiyonlu festival."),
-        ],
-        feats=[
-            ("Sahne", "Ana ekran ve IMAG. Yönetmen çözünürlüğü native’e yazılır."),
-            ("Kanat", "Lineer uzatma. Simetri ve eğim aynı kilit dilinde."),
-            ("IP opsiyon", "Açık hava festival. Yağmur planı keşif maddesidir."),
-            ("Hız", "Hızlı kilit. Load-in penceresi sözleşmeye yazılır."),
-        ],
-        specs=[
-            ("Kullanım", "Konser / festival / lansman"),
-            ("Kurulum", "Stack / fly"),
-            ("IP", "Opsiyonel dış"),
-            ("Garanti", "Proje bazlı"),
-        ],
-    ),
-    "dm-series": dict(
-        body=[
-            "DM, ince çerçeveli modern rental kasadır. TV çekimi ve turda sahne estetiği ile yüksek refresh bir arada istenir.",
-            "Ön-arka bakım, ekip taşıma yükünü ve yayın molasını kısaltır.",
-        ],
-        uses=[
-            (f"{M}/rental-exhibition-booth-326747a9.jpg", "TV set", "İnce çerçeve, yayın estetiği."),
-            (f"{M}/hero-rental-stage.jpg", "Tur sahnesi", "Hafif kasa, yüksek refresh."),
-            (f"{M}/product-cabinet-studio.jpg", "Stüdyo kiralama", "Ön-arka servis."),
-        ],
-        feats=[
-            ("Modern kasa", "İnce çerçeve, sahne estetiği. Kamera kadrajında kalın çerçeve kaybolur."),
-            ("TV çekimi", "Yüksek refresh. Studio shutter ile eşlenir."),
-            ("Hafif", "Ekip taşıma yükü düşük. Günlük load-in sayısı artar."),
-            ("Servis", "Ön-arka bakım. Yayın arasında modül değişimi."),
-        ],
-        specs=[
-            ("Kullanım", "Rental / yayın"),
-            ("Kasa", "İnce çerçeve"),
-            ("Servis", "Ön ve arka"),
-            ("Garanti", "Proje bazlı"),
-        ],
-    ),
-    "pm-series": dict(
-        body=[
-            "PM, panel-modül rental ve yedekleme odaklıdır. Karışık pitch iç-dış setlerde hot-swap ve flight case envanteri öne çıkar.",
-            "Turda kilit pimi ve yedek PSU oranı keşif formunun ilk sayfasındadır.",
-        ],
-        uses=[
-            (f"{M}/rental-flight-cases-fd0c4e92.jpg", "Yedek set", "Dakikada modül değişimi."),
-            (f"{M}/rental-flight-cases-e7055c60.jpg", "Tur kasası", "Etiketli envanter."),
-            (f"{M}/banner-rental.jpg", "Karışık pitch", "İç-dış aynı lojistik."),
-        ],
-        feats=[
-            ("Modül yedek", "Sahada dakika içinde değişim. Arıza kaydı WhatsApp hattına düşer."),
-            ("Tur", "Flight case set. Kasa ağırlığı araç planına yazılır."),
-            ("Kilit", "Hızlı kilit pim. Eğim takozu sete dahildir."),
-            ("Karışık pitch", "İç-dış set. İşlemci katmanı keşifte ayrılır."),
-        ],
-        specs=[
-            ("Kullanım", "Rental yedekleme / tur"),
-            ("Lojistik", "Flight case"),
-            ("Yedek", "Modül + PSU"),
-            ("Garanti", "Proje bazlı"),
-        ],
-    ),
-    "outdoor-q-series": dict(
-        body=[
-            "Dış Mekan Q, cadde, AVM cephe ve durak DOOH için yüksek parlaklık ailesidir. Q5 / Q6.6 / Q8 sınıfı güneş altında okunur; IP ve alüminyum kabin yağmur-toza karşı kapanır.",
-            "Uzaktan yayın (SIM/fiber) ve parlaklık profili (güney cephe vs tünel) fiyatı belirler. Keşifte rüzgar, bakım koridoru ve belediye izin notu toplanır.",
-        ],
-        uses=[
-            (f"{M}/hero-outdoor-dooh.jpg", "Cadde billboard", "Yüksek nit, gündüz okunurluk."),
-            (f"{M}/outdoor-billboard-city-277519d0.jpg", "AVM cephe", "Uzaktan içerik, zamanlayıcı."),
-            (f"{M}/banner-outdoor.jpg", "Durak ve meydan", "IP kabin, arka servis."),
-        ],
-        feats=[
-            ("Yüksek nit", "Güneş altında okunur. Güney cephe için parlaklık sınıfı keşifte ölçülür."),
-            ("IP koruma", "Yağmur ve toz. Conta, drenaj ve kabin kapak detayı teslim kontrolündedir."),
-            ("Uzaktan yayın", "DOOH içerik. Fiber veya yedekli SIM, izleme yazılımı teklife eklenir."),
-            ("Alüminyum kabin", "Dış ortam ısısı. Yaz-kış derating tablosu paylaşılır."),
-        ],
-        specs=[
-            ("Piksel aralığı", "5 / 6.6 / 8 mm sınıfı"),
-            ("Parlaklık", "Yüksek nit, gündüz profili"),
-            ("IP", "Dış mekan"),
-            ("Kabin", "Alüminyum, arka bakım"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "outdoor-s-series": dict(
-        body=[
-            "Dış Mekan S, stadyum peri-led ve büyük format DOOH için dayanımlı kabindir. Rüzgar, titreşim ve tribün mesafesi pitch seçimini belirler.",
-            "Arka koridor bakım ve gündüz maç yayını için yüksek parlaklık aynı seride toplanır.",
-        ],
-        uses=[
-            (f"{M}/outdoor-stadium-d9483c4a.jpg", "Stadyum peri", "Tribün çevresi bilgi ve reklam."),
-            (f"{M}/banner-outdoor.jpg", "Büyük DOOH", "Uzun izleme mesafesi."),
-            (f"{M}/hero-outdoor-dooh.jpg", "Açık hava ekran", "Rüzgar ve IP hesabı."),
-        ],
-        feats=[
-            ("Stadyum", "Uzun izleme mesafesi. 5–8 mm sınıfı tribün okuma mesafesine göre seçilir."),
-            ("Dayanım", "Rüzgar ve titreşim. Çelik konstrüksiyon işverenin statikçisiyle eşlenir."),
-            ("Servis", "Arka koridor bakım. Maç günü erişim prosedürü yazılır."),
-            ("Yüksek parlaklık", "Gündüz maç yayını. Otomatik ışık sensörü önerilir."),
-        ],
-        specs=[
-            ("Piksel aralığı", "5 / 6.6 / 8 mm"),
-            ("Kullanım", "Stadyum / büyük DOOH"),
-            ("IP", "Dış mekan"),
-            ("Bakım", "Arka koridor"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "qm-series": dict(
-        body=[
-            "QM, 640×480 ince alüminyum çok amaçlı kabindir. İç ve yarı açık duvar, kolon ve asma tavan işlerinde duvar kalınlığını düşürür.",
-            "Standart modül uyumu yedeklemeyi kolaylaştırır. İstanbul stoklu PSU ve kablo seti aynı siparişte çıkar.",
-        ],
-        uses=[
-            (f"{M}/product-slim-cabinet.jpg", "İnce duvar", "Asma ve niş, düşük kalınlık."),
-            (f"{M}/product-cabinet-studio.jpg", "Kolon giydirme", "640×480 ritim."),
-            (f"{M}/product-modular-cabinets-9ef30032.jpg", "Çok amaçlı set", "İç / yarı açık."),
-        ],
-        feats=[
-            ("İnce kasa", "Duvar kalınlığını düşürür. Mimari detay keşifte milimetreyle işlenir."),
-            ("640×480", "Standart modül uyumu. Yedek stok planı sadeleşir."),
-            ("Çok amaç", "İç ve yarı açık alan. IP beklentisi ayrı spece yazılır."),
-            ("Hafif", "Asma tavan / duvar. Askı yükü statikçiye iletilir."),
-        ],
-        specs=[
-            ("Kabin", "640×480 mm"),
-            ("Malzeme", "Alüminyum"),
-            ("Kullanım", "Çok amaçlı iç / yarı açık"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "mg-series": dict(
-        body=[
-            "MG, dış mekan döküm alüminyum kabin ve 320×160 modül ailesidir. Cadde billboard ve durak işlerinde Q/S 5–8 mm ile birlikte speclenir.",
-            "Arka kapak bakım ve su-toz contası teslim kontrol listesindedir.",
-        ],
-        uses=[
-            (f"{M}/product-cabinet-studio.jpg", "Döküm kabin", "Dış ortam su ve toz."),
-            (f"{M}/hero-outdoor-dooh.jpg", "Cadde reklam", "320×160 modül."),
-            (f"{M}/outdoor-billboard-city-277519d0.jpg", "Durak / billboard", "Yüksek nit, arka servis."),
-        ],
-        feats=[
-            ("Döküm kabin", "Dış ortam su ve toz. Conta değişim aralığı bakıma yazılır."),
-            ("320×160", "Yaygın dış mekan modül. Saha yedeği kolay bulunur."),
-            ("Cadde", "Billboard ve durak. Belediye izin ve aydınlatma yönetmeliği keşif notudur."),
-            ("Servis", "Arka kapak bakım. Platform ve emniyet planı kuruluma eklenir."),
-        ],
-        specs=[
-            ("Modül", "320×160 mm"),
-            ("Pitch", "5 / 6.6 / 8 mm"),
-            ("Kullanım", "Dış mekan reklam"),
-            ("Kabin", "Döküm alüminyum"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "p-series": dict(
-        body=[
-            "P serisi güç kaynağı ve kabin aksesuar ailesidir. Q ve rental duvarların yedekli PSU, konnektör ve kablolama setini tamamlar.",
-            "İstanbul yedek stoku arıza süresini kısaltır. Teklifte ekranla birlikte PSU adedi ve yedek oranı yazılır.",
-        ],
-        uses=[
-            (f"{M}/product-slim-cabinet.jpg", "Yedekli PSU", "Kritik duvarlarda N+1."),
-            (f"{M}/product-modular-cabinets-b6353441.jpg", "Kabin uyumu", "Q / rental aileleri."),
-            (f"{M}/rental-flight-cases-fd0c4e92.jpg", "Saha kablosu", "Hızlı konnektör."),
-        ],
-        feats=[
-            ("Güç", "Yedekli PSU seçenekleri. 7/24 duvarda N+1 önerilir."),
-            ("Kabin uyumu", "Q / rental aileleri. Yanlış konnektör riski keşifte kapanır."),
-            ("Kablolama", "Hızlı konnektör. Rental sökümde kablo hasarı azalır."),
-            ("Stok", "İstanbul yedek. Aynı gün kargo veya saha bırakma."),
-        ],
-        specs=[
-            ("Tip", "Kabin / güç aksesuar"),
-            ("Uyum", "Toeled serileri"),
-            ("Yedek", "İstanbul stok"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-    "v-series-": dict(
-        body=[
-            "V serisi dikey totem, sütun ve yaratıcı form aksesuar kabinidir. İç mekan asma ve klipsli servis, vitrin totemlerinde öne çıkar.",
-            "URL /v-series-/ korunur; vitrinde başlık V Serisi’dir. Özel form için çizim keşifte alınır.",
-        ],
-        uses=[
-            (f"{M}/product-slim-cabinet.jpg", "Totem", "Dikey bilgi ve yönlendirme."),
-            (f"{M}/product-holographic.jpg", "Yaratıcı form", "Özel kesim destek."),
-            (f"{M}/banner-indoor.jpg", "İç asma", "Hafif klips servis."),
-        ],
-        feats=[
-            ("Dikey", "Sütun ve totem. İzleme yüksekliği keşifte işaretlenir."),
-            ("Yaratıcı", "Özel form destek. Çizim onayından sonra üretim."),
-            ("Hafif", "İç mekan asma. Askı detayı mimarla paylaşılır."),
-            ("Servis", "Hızlı klips. Vitrin içi bakım kısa kesilir."),
-        ],
-        specs=[
-            ("Kullanım", "Totem / dikey / özel form"),
-            ("Kabin", "V serisi"),
-            ("Kurulum", "İç asma / zemin"),
-            ("Garanti", "2 yıl"),
-        ],
-    ),
-}
+def _feat_html(p) -> str:
+    if isinstance(p, (list, tuple)):
+        return "".join(f"<p>{x}</p>" for x in p)
+    return f"<p>{p}</p>"
 
 
 def series_main(s: dict) -> str:
     extra = EXTRA.get(s["slug"], {})
-    gal_imgs = list(s["g"])
-    for img, _t, _d in extra.get("uses") or []:
-        if img not in gal_imgs:
-            gal_imgs.append(img)
+    slug = s["slug"]
+    gal_imgs = extra.get("gallery") or [
+        pack(slug, "hero"),
+        pack(slug, "studio"),
+        pack(slug, "feat-1"),
+        pack(slug, "use-1"),
+    ]
     gallery = "".join(
         f'<div class="swiper-slide"><a class="product-swiper-i" href="{img}">'
         f'<img src="{img}" alt="{s["title"]}"></a></div>'
-        for img in gal_imgs[:6]
+        for img in gal_imgs[:4]
     )
     feats_src = extra.get("feats") or s["feats"]
     feats = []
     for i, item in enumerate(feats_src):
-        h, p, img = (item[0], item[1], item[2] if len(item) > 2 else s["hero"])
+        if len(item) < 3:
+            raise SystemExit(f"feat missing unique img: {slug} {item[0]}")
+        h, p, img = item[0], item[1], item[2]
         side = "fadel" if i % 2 == 0 else "fader"
         feats.append(
             f'<div class="product-model1"><div class="row"><div class="row-i">'
             f'<div class="product-model1-left" hsm="{side}"><div class="product-model1-title items-center">'
             f'<span></span><p class="t1"><strong>{h}</strong></p></div>'
-            f'<div class="product-model1-info">{p}</div></div>'
+            f'<div class="product-model1-info">{_feat_html(p)}</div></div>'
             f'<div class="product-model1-right img-scale"><img src="{img}" alt="{h}"></div>'
             f"</div></div></div>"
         )
     specs_src = extra.get("specs") or s["specs"]
     specs = "".join(f"<div><span>{k}</span><strong>{v}</strong></div>" for k, v in specs_src)
-    body = list(extra.get("body") or [s["lead"]]) + CAT_MORE.get(s["cat"], [])
+    body = list(extra.get("body") or [s["lead"]])
     body_html = "".join(f"<p>{p}</p>" for p in body)
-    uses = extra.get("uses") or []
+    uses = extra.get("uses") or [
+        (pack(slug, "use-1"), "Saha kullanımı", s["lead"]),
+        (pack(slug, "use-2"), "Kurulum", s["lead"]),
+        (pack(slug, "hero"), s["title"], s["lead"]),
+    ]
     use_html = ""
     if uses:
         cards = "".join(
@@ -659,7 +171,7 @@ def series_main(s: dict) -> str:
             ("İçerik çözünürlüğü nasıl ayarlanır?", "Ekranın native piksel sayısına export edin. Ölçeklenmiş 4K fine pitch’te yumuşar; işlemci girişi keşifte yazılır."),
         ],
     )
-    hero_img = s["hero"]
+    split_img = pack(slug, "studio")
     return f"""
 {crumbs([("/products/", "Ürünler"), (s["catu"], s["catn"]), ("", s["title"])])}
 <div class="product-b">
@@ -685,7 +197,7 @@ def series_main(s: dict) -> str:
   {"".join(feats)}
   {use_html}
   <div class="tl-prose">
-    {split(hero_img, s["title"] + " keşif", "Keşifte netleşenler", [
+    {split(split_img, s["title"] + " keşif", "Keşifte netleşenler", [
         f"{s['title']} teklifi ölçü, izleme mesafesi, güç noktası ve servis yönü olmadan kilitlenmez. {s['catn']} ailesinde kabin ve kontrol aynı tutanakta toplanır.",
         "Foto ve kroki aynı gün yeter; Şişli showroom’da örnek izlemek pitch kararını hızlandırır. Teslimde operatör eğitimi ve 2 yıl garanti maddesi imzalanır.",
     ])}

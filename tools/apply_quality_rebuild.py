@@ -34,6 +34,20 @@ SERIES = [
     dict(slug="v-series-", title="V Serisi", cat="acc", catn="Aksesuarlar", catu="/accessories/", pitch="V kabin", lead="Dikey ve yaratıcı ekran kurulumları için V serisi aksesuar kabin.", hero=f"{M}/product-slim-cabinet.jpg", g=[f"{M}/product-slim-cabinet.jpg", f"{M}/product-holographic.jpg"], feats=[("Dikey", "Sütun ve totem.", f"{M}/product-slim-cabinet.jpg"), ("Yaratıcı", "Özel form destek.", f"{M}/product-holographic.jpg"), ("Hafif", "İç mekan asma.", f"{M}/banner-indoor.jpg"), ("Servis", "Hızlı klips.", f"{M}/product-cabinet-studio.jpg")], specs=[("Kullanım", "Totem / dikey"), ("Kabin", "V serisi"), ("Garanti", "2 yıl")]),
 ]
 
+
+def pack_img(slug: str, key: str) -> str:
+    return f"{M}/series/{slug}/{key}.jpg"
+
+
+for _s in SERIES:
+    _slug = _s["slug"]
+    _s["hero"] = pack_img(_slug, "hero")
+    _s["g"] = [pack_img(_slug, k) for k in ("hero", "studio", "feat-1", "use-1")]
+    _s["feats"] = [
+        (t, d, pack_img(_slug, f"feat-{i}"))
+        for i, (t, d, *_rest) in enumerate(_s["feats"], start=1)
+    ]
+
 CASES = [
     dict(id="ist-otel", title="İstanbul otel lobisi", city="İstanbul", cat="indoor", img=f"{M}/indoor-corporate-lobby-3c5ebf5e.jpg", product="İç Mekan Q 1.8", area="32 m²", text="5 yıldızlı otel karşılama duvarı. Fine pitch, gündüz lobisinde okunur içerik."),
     dict(id="ist-showroom", title="Şişli showroom duvarı", city="İstanbul", cat="indoor", img=f"{M}/showroom-istanbul.webp", product="Q Mini 1.5", area="18 m²", text="LEDAJANS showroom ana duvarı. Müşteri keşif toplantılarında canlı demo."),

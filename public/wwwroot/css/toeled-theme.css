@@ -763,10 +763,43 @@ dialog.tl-case-modal::backdrop {
   margin: 0 0 12px;
 }
 
+.product-model1 .row-i {
+  align-items: stretch;
+  padding: 12px 0 36px;
+}
+
+.product-model1-left {
+  padding: 8px 8px 20px 0;
+}
+
 .product-model1-info {
   font-size: 16px !important;
-  line-height: 1.7 !important;
+  line-height: 1.75 !important;
   color: #3a4458;
+  max-width: 38rem;
+}
+
+.product-model1-info p {
+  margin: 0 0 14px;
+}
+
+.product-model1-right {
+  min-height: 380px;
+}
+
+.product-model1-right img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 380px !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  border-radius: 16px;
+}
+
+@media (min-width: 901px) {
+  .product-model1-right img {
+    min-height: 420px !important;
+  }
 }
 
 .product-list-b-img img {

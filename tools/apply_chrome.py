@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-THEME = '<link rel="stylesheet" href="/public/wwwroot/css/toeled-theme.css?v=2.2.0">'
+THEME = '<link rel="stylesheet" href="/public/wwwroot/css/toeled-theme.css?v=2.3.0">'
 FAVICONS = """<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/favicon.svg">
