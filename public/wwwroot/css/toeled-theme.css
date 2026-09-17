@@ -964,6 +964,8 @@ dialog.tl-case-modal::backdrop {
   top: var(--tl-header-h);
   height: calc(100vh - var(--tl-header-h));
   overflow: hidden;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .tl-pdp-explode-video {

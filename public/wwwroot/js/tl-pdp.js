@@ -2,7 +2,8 @@
   "use strict";
 
   var REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var LERP = 0.24;
+  var LERP = 0.22;
+  var FRAME = 1 / 24;
 
   function clamp(n, a, b) {
     return Math.max(a, Math.min(b, n));
@@ -38,6 +39,7 @@
 
   function initExplode(root) {
     var video = root.querySelector(".tl-pdp-explode-video");
+    var pin = root.querySelector(".tl-pdp-explode-pin");
     if (!video) return;
 
     video.muted = true;
@@ -47,7 +49,8 @@
     video.setAttribute("webkit-playsinline", "");
     video.preload = "auto";
     video.controls = false;
-    video.pause();
+    video.style.pointerEvents = "none";
+    if (pin) pin.style.willChange = "transform";
 
     if (REDUCE.matches) {
       root.classList.add("is-static");
@@ -57,49 +60,52 @@
       return;
     }
 
-    var target = 0;
-    var current = 0;
+    var targetTime = 0;
+    var smoothTime = 0;
+    var pendingSeek = false;
 
     function durationOf() {
       var d = video.duration;
       return d && isFinite(d) && d > 0.05 ? d : 0;
     }
 
-    function unlock() {
-      video.muted = true;
-      var play = video.play();
-      if (play && typeof play.then === "function") {
-        play
-          .then(function () {
-            video.pause();
-          })
-          .catch(function () {});
-      } else {
-        video.pause();
+    function setTarget() {
+      var duration = durationOf();
+      if (!duration) return;
+      targetTime = progressOf(root) * Math.max(0, duration - FRAME);
+    }
+
+    video.addEventListener("seeked", function () {
+      pendingSeek = false;
+    });
+
+    function applyTime() {
+      if (pendingSeek || video.seeking) return;
+      if (video.readyState < 2) return;
+      var duration = durationOf();
+      if (!duration) return;
+      var next = clamp(smoothTime, 0, duration);
+      if (Math.abs(video.currentTime - next) < FRAME) return;
+      pendingSeek = true;
+      try {
+        video.currentTime = next;
+      } catch (e) {
+        pendingSeek = false;
       }
     }
 
-    function applyTime() {
-      var duration = durationOf();
-      if (!duration || video.seeking) return;
-      var next = current * Math.max(0, duration - 0.04);
-      if (Math.abs(video.currentTime - next) < 0.02) return;
-      try {
-        video.currentTime = next;
-      } catch (e) {}
-    }
-
     function tick() {
-      target = progressOf(root);
-      current += (target - current) * LERP;
-      if (Math.abs(target - current) < 0.0005) current = target;
+      setTarget();
+      smoothTime += (targetTime - smoothTime) * LERP;
+      if (Math.abs(targetTime - smoothTime) < 0.0004) smoothTime = targetTime;
       applyTime();
       requestAnimationFrame(tick);
     }
 
     loadSeekable(video, function () {
-      unlock();
-      window.addEventListener("touchstart", unlock, { passive: true, once: true });
+      setTarget();
+      smoothTime = targetTime;
+      window.addEventListener("scroll", setTarget, { passive: true });
       requestAnimationFrame(tick);
     });
   }
