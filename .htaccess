@@ -3,3 +3,14 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.+)/$ $1/index.html [L]
+
+# Toeled news 301
+Redirect 301 /news/qiangli-led-successfully-concludes-ise-2026/ /news/ise-2026-toeled-led-ekran/
+Redirect 301 /news/join-us-at-ise-spain-2026-to-explore-the-future-of-led-display-technology/ /news/ise-2026-toeled-led-ekran/
+Redirect 301 /news/-qiangli-jucai-overseas-order-payment-account-statement-/ /news/odeme-guvenligi-uyarisi/
+Redirect 301 /news/celebrating-the-successful-conclusion-of-qiangli-led-s-20th-anniversary-event/ /news/istanbul-led-ekran-showroom/
+Redirect 301 /news/qiangli-jucai-has-landed-on-the-nasdaq-screen-in-times-square-new-york/ /news/istanbul-led-ekran-showroom/
+Redirect 301 /news/qiangli-jucai-deepens-middle-east-layout-secures-strategic-cooperation-on-led-display-with-jordan-s-al-bahhar-est-/ /news/ic-mekan-led-ekran-nasil-secilir/
+Redirect 301 /news/the-9thpanel-made-a-successful-debut-at-the-ise-show-in-spain-receiving-a-flood-of-positive-feedback-from-customers-/ /news/ise-2026-toeled-led-ekran/
+Redirect 301 /news/topping-sales-again-strong-giant-color-captures-the-first-place-in-led-display-sales-demonstrating-the-kingly-demeanor-with-channel-advantages-/ /news/dis-mekan-led-ekran-parlaklik/
+Redirect 301 /certificates-honor/2/ /certificates-honor/

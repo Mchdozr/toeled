@@ -144,7 +144,7 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
             var payload = $(form).serializeArray();
 
             if (submitUrl.indexOf("formsubmit.co") !== -1) {
-                payload.push({ name: "_subject", value: "Toeled - İletişim Formu" });
+                payload.push({ name: "_subject", value: "Toeled - Teklif" });
                 payload.push({ name: "_captcha", value: "false" });
                 payload.push({ name: "_template", value: "table" });
                 payload.push({ name: "_form", value: $(formObj).attr("id") || "contact" });
@@ -380,7 +380,7 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
             });
         }
 
-        var hasHeroUnderHeader = !!document.querySelector("main > .home-swiper, main > .public-banner, main > .swiper.home-swiper");
+        var hasHeroUnderHeader = !!document.querySelector("main > .home-swiper, main > .swiper.home-swiper");
         if (hasHeroUnderHeader) {
             header.classList.add("tl-header-over-media");
         }
@@ -407,6 +407,27 @@ function AjaxInitForm(formObj, btnObj, isDialog, urlObj, callback) {
     } else {
         boot();
     }
+})();
+
+(function initToeledProductGallery() {
+    function start() {
+        if (typeof Swiper === "undefined") {
+            return;
+        }
+        document.querySelectorAll(".product-swiper").forEach(function (el) {
+            if (el.swiper) {
+                return;
+            }
+            new Swiper(el, {
+                autoplay: el.querySelectorAll(".swiper-slide").length > 1 ? { delay: 4000, disableOnInteraction: false } : false,
+                pagination: {
+                    el: el.querySelector(".swiper-pagination"),
+                    clickable: true
+                }
+            });
+        });
+    }
+    window.addEventListener("load", start);
 })();
 
 //只允许输入数字

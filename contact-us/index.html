@@ -10,18 +10,30 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no">
   <meta name="wap-font-scale" content="no">
-  <title>Toeled</title>
+  <title>Teklif Alın | Toeled İletişim</title>
+<meta property="og:title" content="Teklif Alın | Toeled İletişim">
+<meta property="og:description" content="LED ekran keşif ve fiyat teklifi için İstanbul ofisi, WhatsApp ve form.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toeled.com/contact-us/">
+<meta property="og:image" content="https://toeled.com/public/wwwroot/media/hero-indoor-led.jpg">
     <link rel="canonical" href="https://toeled.com/contact-us/">
-  <meta name="Keywords" content="Toeled" />
-  <meta name="Description" content="Toeled" />
+  <meta name="Keywords" content="Toeled, LED ekran, LEDAJANS, rental LED, iç mekan LED" />
+  <meta name="Description" content="LED ekran keşif ve fiyat teklifi için İstanbul ofisi, WhatsApp ve form." />
   <link rel="stylesheet" href="/public/wwwroot/plugin/layui/layui.css">
 <link rel="stylesheet" href="/public/wwwroot/plugin/uikit/uikit.min.css?v=1.0.1">
 <link rel="stylesheet" href="/public/wwwroot/css/plugin.css">
 <link rel="stylesheet" href="/public/wwwroot/css/layout.css?v=1.0.0">
 <link rel="stylesheet" href="/public/wwwroot/css/style.css?v=1.0.0">
 <link rel="stylesheet" href="/public/wwwroot/css/motion.css?v=1.1.13">
+<link rel="stylesheet" href="/public/wwwroot/css/toeled-theme.css?v=2.2.0">
 <link rel="stylesheet" href="/public/wwwroot/css/swiper-bundle.min.css">
-<link rel="shortcut icon" href="/9thpanel.ico" />
+
+
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="shortcut icon" href="/favicon.ico" />
 <script src="/public/wwwroot/js/plugin.js"></script>
 <!-- <script src="/public/wwwroot/js/main.js"></script> -->
 <script src="/public/wwwroot/js/swiper-bundle.min.js"></script>
@@ -31,18 +43,12 @@
 <script src="/public/wwwroot/plugin/uikit/uikit-icons.min.js"></script>
 <script src="/public/wwwroot/plugin/layui/layui.js"></script>
 <script src="/scripts/sweet/sweetalert.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="/public/wwwroot/js/my-js.js?v=1.1.3"></script>
+<script type="text/javascript" charset="utf-8" src="/public/wwwroot/js/my-js.js?v=1.2.1"></script>
 <link href="/public/css/validate.css?v=1.0.0" rel="stylesheet" />
   <script type="text/javascript" charset="utf-8" src="/scripts/jquery/jquery.form.min.js"></script>
   <script type="text/javascript" charset="utf-8" src="/scripts/jquery/Validform_v5.3.2_min.js"></script>
   
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', '');
-</script>
   <script type="text/javascript">
     $(function() {
       //初始化表单
@@ -353,9 +359,9 @@
         <div class="contact-info-i items-center" hsm="fadeup"><div class="contact-info-img"><img src="/public/wwwroot/images/icon-lx1.png" alt=""/></div><div class="contact-info-msg"><p class="t1">Telefon</p><p class="t2">+90 212 220 40 04</p></div></div><div class="contact-info-i items-center" hsm="fadeup"><div class="contact-info-img"><img src="/public/wwwroot/images/icon-lx2.png" alt=""/></div><div class="contact-info-msg"><p class="t1">Adres</p><p class="t2">Halide Edip Adıvar Mah. Gül 2 Sk. No:10a, 34382 Şişli/İstanbul</p></div></div><div class="contact-info-i items-center" hsm="fadeup"><div class="contact-info-img"><img src="/public/wwwroot/images/icon-lx3.png" alt=""/></div><div class="contact-info-msg"><p class="t1">E-posta</p><p class="t2">info@ledajans.com</p></div></div><div class="contact-info-i items-center" hsm="fadeup"><div class="contact-info-img"><img src="/public/wwwroot/images/icon-whatsapp.svg" alt="WhatsApp"/></div><div class="contact-info-msg"><p class="t1">WhatsApp</p><p class="t2"><a href="https://wa.me/902122204004" target="_blank" rel="noopener">+90 212 220 40 04</a></p></div></div>        </div>
       </div>
       <form id="inqForm" name="inqForm" url="#">
-      <input type="hidden" name="csrf_token" value="6b1ecf5bb1cf4dad8a30f400c3cab20bb299218be02fecc2bae62d51e8bac784">
+      
       <div class="model2">
-        <h1 class="public-title" hsm="fadeup">Mesaj Bırakın</h1>
+        <h1 class="public-title" hsm="fadeup">Teklif alın</h1>
         <p class="t2" hsm="fadeup">Mesajınızı bırakın, en kısa sürede dönüş yapalım </p>
 
         <div class="contact-msg justify-between" hsm="fadeup">
@@ -368,7 +374,28 @@
             <input class="inputs" type="text" name="email" datatype="e" nullmsg="Lütfen e-posta adresinizi yazın" errormsg="E-posta formatı hatalı" sucmsg=" ">
           </div>
         </div>
+        
+        <div class="contact-msg justify-between" hsm="fadeup">
+          <div class="contact-msg-i items-center">
+            <span>Şirket</span>
+            <input class="inputs" type="text" name="company" maxlength="80">
+          </div>
+          <div class="contact-msg-i items-center">
+            <span>Kullanım</span>
+            <select class="inputs" name="usage">
+              <option value="">Seçin</option>
+              <option>İç mekan</option>
+              <option>Dış mekan</option>
+              <option>Kiralama &amp; Sahne</option>
+              <option>DOOH</option>
+            </select>
+          </div>
+        </div>
         <div class="contact-msg-i items-center" style="width: 100%;" hsm="fadeup">
+          <span>Yaklaşık ölçü</span>
+          <input class="inputs" type="text" name="size" placeholder="ör. 4 x 2,5 m" maxlength="80">
+        </div>
+<div class="contact-msg-i items-center" style="width: 100%;" hsm="fadeup">
           <span>Telefon / WhatsApp </span>
           <input class="inputs" type="text" name="telphone" datatype="*0-200" nullmsg="Lütfen telefonunuzu yazın" errormsg="en fazla 200 karakter" sucmsg=" ">
         </div>
@@ -382,7 +409,7 @@
           <a href="javascript:;" onclick="toggleCode();" style="height: 100%;display: contents;"><img class="verycode" src="/Manage_SW/ValidateCode" /></a>
         </div> -->
         <button id="btnGönder" name="btnGönder" type="submit" class="contact-btn trans-up">
-            Gönder
+            Teklif Alın
           </button>
        
 
@@ -398,7 +425,7 @@
     <div class="public-footer">
       <div class="top justify-between">
         <div class="public-footer-i">
-          <p><img class="logo" src="/public/wwwroot/images/logo10.svg" alt="TOELED"/></p><div class="public-footer-code"><a class="code-item"><img src="/public/wwwroot/media/c67b7ce8eed8.png" alt="1787293741960464.jpg" title="1787293741960464.jpg" width="125" height="125" border="0" vspace="0" style="width: 125px; height: 125px;"/></a></div><div class="public-footer-site">Sosyal medya</div><div class="icon-b items-center"><a href="#" target="_blank" rel="noopener"><img src="/public/wwwroot/images/icon-top-youtube1.png" alt="YouTube"/></a> <a href="#" target="_blank" rel="noopener"><img src="/public/wwwroot/images/icon-top-facebook1.png" alt="Facebook"/></a> <a href="#" target="_blank" rel="noopener"><img src="/public/wwwroot/images/icon-top-linkin1.png" alt="LinkedIn"/></a> <a href="#" target="_blank" rel="noopener"><img src="/public/wwwroot/images/icon-top-instagram1.png" alt="Instagram"/></a></div><p><br/></p>        </div>
+          <p><img class="logo" src="/public/wwwroot/images/logo10.svg" alt="TOELED"/></p><p><br/></p>        </div>
         <div class="list justify-between">
           <div class="list-i">
             <a class="title" href="/products/">Ürünler</a>
@@ -481,6 +508,24 @@
           <span class="t1">E-posta *</span>
           <input class="inputs" type="text" name="email" datatype="e" nullmsg="Lütfen e-posta adresinizi yazın" errormsg="E-posta formatı hatalı" sucmsg=" ">
         </div>
+      </div>
+      <div class="fixed-input-i items-center">
+        <span class="t1">Şirket</span>
+        <input class="inputs" type="text" name="company" maxlength="80">
+      </div>
+      <div class="fixed-input-i items-center">
+        <span class="t1">Kullanım</span>
+        <select class="inputs" name="usage_fixed">
+          <option value="">Seçin</option>
+          <option>İç mekan</option>
+          <option>Dış mekan</option>
+          <option>Kiralama &amp; Sahne</option>
+          <option>DOOH</option>
+        </select>
+      </div>
+      <div class="fixed-input-i items-center">
+        <span class="t1">Yaklaşık ölçü</span>
+        <input class="inputs" type="text" name="size" placeholder="ör. 4 x 2,5 m" maxlength="80">
       </div>
       <div class="fixed-input-i items-center">
         <span class="t1">Telefon / WhatsApp</span>
