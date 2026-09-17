@@ -7,11 +7,16 @@ from apply_quality_rebuild import (
     SERIES,
     NEWS,
     CASES,
+    EXPLODE_SLUGS,
     banner,
     crumbs,
     quote,
     set_main,
     write_page,
+    explode_section,
+    explode_script,
+    patch_homepage,
+    sweep,
 )
 from series_extra import EXTRA, pack
 
@@ -76,7 +81,7 @@ def related_cards(items: list) -> str:
     if not items:
         return ""
     cards = "".join(
-        f'<a class="tl-guide-card" href="/{s["slug"]}/"><img src="{s["hero"]}" alt="{s["title"]}">'
+        f'<a class="tl-guide-card" href="/{s["slug"]}/"><img src="{pack(s["slug"], "hero")}" alt="{s["title"]}">'
         f'<div class="copy"><h3>{s["title"]}</h3><p>{s["pitch"]} — {s["lead"]}</p></div></a>'
         for s in items
     )
@@ -116,6 +121,8 @@ def _feat_html(p) -> str:
 def series_main(s: dict) -> str:
     extra = EXTRA.get(s["slug"], {})
     slug = s["slug"]
+    hero = pack(slug, "hero")
+    gal_keys = ("Hero", "Stüdyo", "Tanıtım", "Kullanım")
     gal_imgs = extra.get("gallery") or [
         pack(slug, "hero"),
         pack(slug, "studio"),
@@ -123,9 +130,9 @@ def series_main(s: dict) -> str:
         pack(slug, "use-1"),
     ]
     gallery = "".join(
-        f'<div class="swiper-slide"><a class="product-swiper-i" href="{img}">'
-        f'<img src="{img}" alt="{s["title"]}"></a></div>'
-        for img in gal_imgs[:4]
+        f'<a class="tl-pdp-gal-i" href="{img}">'
+        f'<img src="{img}" alt="{s["title"]} {gal_keys[i]}" loading="lazy"></a>'
+        for i, img in enumerate(gal_imgs[:4])
     )
     feats_src = extra.get("feats") or s["feats"]
     feats = []
@@ -133,14 +140,12 @@ def series_main(s: dict) -> str:
         if len(item) < 3:
             raise SystemExit(f"feat missing unique img: {slug} {item[0]}")
         h, p, img = item[0], item[1], item[2]
-        side = "fadel" if i % 2 == 0 else "fader"
+        flip = " tl-pdp-feat--flip" if i % 2 else ""
         feats.append(
-            f'<div class="product-model1"><div class="row"><div class="row-i">'
-            f'<div class="product-model1-left" hsm="{side}"><div class="product-model1-title items-center">'
-            f'<span></span><p class="t1"><strong>{h}</strong></p></div>'
-            f'<div class="product-model1-info">{_feat_html(p)}</div></div>'
-            f'<div class="product-model1-right img-scale"><img src="{img}" alt="{h}"></div>'
-            f"</div></div></div>"
+            f'<article class="tl-pdp-feat{flip}">'
+            f'<div class="tl-pdp-feat-media"><img src="{img}" alt="{h}" loading="lazy"></div>'
+            f'<div class="tl-pdp-feat-copy"><p class="tl-pdp-feat-idx">0{i + 1}</p>'
+            f"<h2>{h}</h2>{_feat_html(p)}</div></article>"
         )
     specs_src = extra.get("specs") or s["specs"]
     specs = "".join(f"<div><span>{k}</span><strong>{v}</strong></div>" for k, v in specs_src)
@@ -154,11 +159,15 @@ def series_main(s: dict) -> str:
     use_html = ""
     if uses:
         cards = "".join(
-            f'<div class="tl-guide-card"><img src="{img}" alt="{t}">'
-            f'<div class="copy"><h3>{t}</h3><p>{d}</p></div></div>'
+            f'<article class="tl-pdp-use"><img src="{img}" alt="{t}" loading="lazy">'
+            f"<div class=\"copy\"><h3>{t}</h3><p>{d}</p></div></article>"
             for img, t, d in uses
         )
-        use_html = f'<div class="tl-prose"><h2 id="kullanim">Nerede kullanılır?</h2><div class="tl-guide-grid">{cards}</div></div>'
+        use_html = (
+            f'<section class="tl-pdp-uses" id="kullanim">'
+            f'<h2 class="tl-pdp-h">Nerede kullanılır?</h2>'
+            f'<div class="tl-pdp-use-grid">{cards}</div></section>'
+        )
     peers = [x for x in SERIES if x["catu"] == s["catu"] and x["slug"] != s["slug"]][:3]
     faqs = extra.get(
         "faq",
@@ -172,55 +181,62 @@ def series_main(s: dict) -> str:
         ],
     )
     split_img = pack(slug, "studio")
+    explode = explode_section(s["title"]) if slug in EXPLODE_SLUGS else ""
+    explode_js = explode_script() if slug in EXPLODE_SLUGS else ""
     return f"""
 {crumbs([("/products/", "Ürünler"), (s["catu"], s["catn"]), ("", s["title"])])}
-<div class="product-b">
-  <div class="product-b-top ov">
-    <div class="product-b-top-info hsms">
-      <h1 class="t1" hsm="fadeup">{s["title"]}</h1>
-      <div class="swiper product-swiper" hsm="fadeup">
-        <div class="swiper-wrapper" uk-lightbox>{gallery}</div>
-        <div class="swiper-pagination"></div>
-      </div>
-      <div class="t2" hsm="fadeup">{body_html}
-      <p><strong>Piksel aralığı:</strong> {s["pitch"]}</p></div>
+<article class="tl-pdp">
+  <header class="tl-pdp-hero">
+    <img class="tl-pdp-hero-img" src="{hero}" alt="{s["title"]}">
+    <div class="tl-pdp-hero-copy">
+      <p class="tl-pdp-kicker">{s["catn"]}</p>
+      <h1>{s["title"]}</h1>
+      <p class="tl-pdp-pitch">{s["lead"]}</p>
+      <p class="tl-pdp-meta">Piksel aralığı · {s["pitch"]}</p>
+      <a class="tl-pdp-cta" href="#kesif" data-offset="140" uk-scroll>Keşif alın</a>
     </div>
-  </div>
-  <div class="product-b-type"><div class="row hsms">
-    <a class="product-b-type-i cur" href="#i1" data-offset="220" uk-scroll>Tanıtım</a>
-    <a class="product-b-type-i" href="#kullanim" data-offset="220" uk-scroll>Kullanım</a>
-    <a class="product-b-type-i" href="#kesif" data-offset="220" uk-scroll>Keşif</a>
-    <a class="product-b-type-i" href="#i2" data-offset="220" uk-scroll>Teknik Özellikler</a>
-  </div></div>
-  <div class="product-model1" style="padding-bottom:0"><div class="row">
-    <h3 class="product-title" id="i1">Tanıtım</h3></div></div>
-  {"".join(feats)}
+  </header>
+  {explode}
+  <nav class="tl-pdp-nav" aria-label="Sayfa bölümleri">
+    <div class="tl-pdp-nav-inner">
+      <a href="#tanitim" data-offset="140" uk-scroll>Tanıtım</a>
+      <a href="#kullanim" data-offset="140" uk-scroll>Kullanım</a>
+      <a href="#kesif" data-offset="140" uk-scroll>Keşif</a>
+      <a href="#teknik" data-offset="140" uk-scroll>Teknik</a>
+    </div>
+  </nav>
+  <div class="tl-pdp-gal" uk-lightbox>{gallery}</div>
+  <div class="tl-pdp-intro" id="tanitim">{body_html}</div>
+  <div class="tl-pdp-feats">{"".join(feats)}</div>
   {use_html}
-  <div class="tl-prose">
-    {split(split_img, s["title"] + " keşif", "Keşifte netleşenler", [
-        f"{s['title']} teklifi ölçü, izleme mesafesi, güç noktası ve servis yönü olmadan kilitlenmez. {s['catn']} ailesinde kabin ve kontrol aynı tutanakta toplanır.",
-        "Foto ve kroki aynı gün yeter; Şişli showroom’da örnek izlemek pitch kararını hızlandırır. Teslimde operatör eğitimi ve 2 yıl garanti maddesi imzalanır.",
-    ])}
-    <h2 id="kesif">Teklif öncesi kontrol</h2>
-    {checks([
-        "En × boy ve izleme mesafesi",
-        "İç / dış / rental senaryosu",
-        "Güç panosu, toprak ve varsa UPS",
-        "Askı, duvar veya zemin sehpa",
-        "Ön veya arka bakım koridoru",
-        "Native içerik çözünürlüğü",
-        "Yedek modül / PSU oranı",
-        "Kurulum penceresi ve teslim eğitimi",
-    ])}
-    {related_cards(peers)}
-  </div>
-  <div class="product-model6"><div class="row">
-    <h3 class="product-title" id="i2">Teknik Özellikler</h3>
-    <div class="tl-spec-grid">{specs}</div>
-  </div></div>
+  <section class="tl-pdp-body" id="kesif">
+    <div class="tl-prose">
+      {split(split_img, s["title"] + " keşif", "Keşifte netleşenler", [
+          f"{s['title']} teklifi ölçü, izleme mesafesi, güç noktası ve servis yönü olmadan kilitlenmez. {s['catn']} ailesinde kabin ve kontrol aynı tutanakta toplanır.",
+          "Foto ve kroki aynı gün yeter; Şişli showroom’da örnek izlemek pitch kararını hızlandırır. Teslimde operatör eğitimi ve 2 yıl garanti maddesi imzalanır.",
+      ])}
+      <h2>Teklif öncesi kontrol</h2>
+      {checks([
+          "En × boy ve izleme mesafesi",
+          "İç / dış / rental senaryosu",
+          "Güç panosu, toprak ve varsa UPS",
+          "Askı, duvar veya zemin sehpa",
+          "Ön veya arka bakım koridoru",
+          "Native içerik çözünürlüğü",
+          "Yedek modül / PSU oranı",
+          "Kurulum penceresi ve teslim eğitimi",
+      ])}
+      {related_cards(peers)}
+    </div>
+  </section>
+  <section class="tl-pdp-tech" id="teknik">
+    <h2 class="tl-pdp-h">Teknik özellikler</h2>
+    <div class="tl-spec-grid tl-pdp-spec">{specs}</div>
+  </section>
   <div class="tl-prose">{faq(faqs)}</div>
   {quote(s["title"] + " için keşif ve teklif alın.")}
-</div>
+</article>
+{explode_js}
 """
 
 
@@ -230,8 +246,8 @@ def cat_page(title: str, intro: list[str], img: str, crumbs_i, series_list, tabs
         cur = " cur" if active else ""
         tab_html += f'<a href="{u}" class="right-i{cur}"><span>{n}</span></a>'
     cards = "".join(
-        f'<a class="product-list-b-i" href="/{s["slug"]}/" hsm="fadeup">'
-        f'<div class="product-list-b-img img-scale"><img src="{s["hero"]}" alt="{s["title"]}"></div>'
+        f'<a class="product-list-b-i tl-cat-card" href="/{s["slug"]}/" hsm="fadeup">'
+        f'<div class="product-list-b-img img-scale"><img src="{pack(s["slug"], "hero")}" alt="{s["title"]}"></div>'
         f'<div class="product-list-b-info"><p class="t1">{s["title"]}</p>'
         f'<p class="t2">Piksel aralığı: {s["pitch"]}</p>'
         f'<p class="t3">{s["lead"]}</p></div></a>'
@@ -1081,6 +1097,11 @@ def main() -> None:
         title, desc = PAGE_META[url]
         write_page(page, set_main(page.read_text(encoding="utf-8"), cases_rich(heading, kind, img)), url, title, desc)
         n += 1
+
+    home = ROOT / "index.html"
+    t, d = PAGE_META["/"]
+    write_page(home, sweep(patch_homepage(home.read_text(encoding="utf-8"))), "/", t, d)
+    n += 1
 
     print("enriched", n)
 

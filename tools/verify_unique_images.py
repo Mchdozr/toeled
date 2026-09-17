@@ -51,7 +51,7 @@ def main() -> int:
             continue
         html = page.read_text(encoding="utf-8", errors="ignore")
         feat_srcs = re.findall(
-            r'product-model1-right[^>]*>\s*<img src="([^"]+)"',
+            r'class="tl-pdp-feat-media".*?<img src="([^"]+)"',
             html,
             re.I | re.S,
         )
@@ -59,7 +59,7 @@ def main() -> int:
             errors.append(f"{slug} tanitim imgs={len(feat_srcs)}")
         elif len(set(feat_srcs)) < 4:
             errors.append(f"{slug} repeated tanitim {feat_srcs}")
-        gal = re.findall(r'product-swiper-i" href="([^"]+)"', html)
+        gal = re.findall(r'tl-pdp-gal-i" href="([^"]+)"', html)
         if len(gal) >= 4 and len(set(gal[:4])) < 4:
             errors.append(f"{slug} gallery repeat {gal[:4]}")
         for src in SRC_RE.findall(html):

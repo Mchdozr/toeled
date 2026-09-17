@@ -82,6 +82,8 @@ def main() -> int:
         ROOT / "public/wwwroot/video/hero-indoor.mp4",
         ROOT / "public/wwwroot/video/hero-rental.mp4",
         ROOT / "public/wwwroot/media/hero-indoor-led.jpg",
+        ROOT / "public/wwwroot/media/product-explode.mp4",
+        ROOT / "public/wwwroot/js/tl-pdp.js",
     ]
     missing = [str(a.relative_to(ROOT)) for a in assets if not a.exists()]
     print(f"Missing assets: {len(missing)}")
@@ -112,13 +114,17 @@ def main() -> int:
     print(f"Unique titles: {unique}/{len(titles)}")
 
     extra_checks = [
-        ("/", ["hero-overlay", "İç Mekan LED Ekran", "hero-indoor.mp4", "favicon.ico"]),
+        ("/", ["hero-overlay", "İç Mekan LED Ekran", "hero-indoor.mp4", "favicon.ico", "product-explode.mp4", "data-tl-explode"]),
         ("/products/", ["tl-hub-card", "İç Mekan", "Kiralama"]),
-        ("/indoor-q-series/", ["İç Mekan Q Serisi", "tl-spec-grid", "Teklif Alın"]),
+        ("/indoor-q-series/", ["İç Mekan Q Serisi", "tl-pdp", "tl-pdp-explode", "product-explode.mp4", "data-tl-explode", "tl-spec-grid", "Teklif Alın"]),
         ("/cases/", ["İstanbul otel", "tl-case-card", "data-case"]),
         ("/about-us/", ["TAHA LED", "LEDAJANS", "sirket.mp4"]),
         ("/news/", ["ise-2026-toeled-led-ekran"]),
         ("/contact-us/", ["name=\"usage\"", "Teklif alın", "maps"]),
+    ]
+    absent_checks = [
+        ("/cms-series-crystal-film-display/", ["tl-pdp-explode", "product-explode.mp4", "data-tl-explode"]),
+        ("/outdoor-q-series/", ["tl-pdp-explode", "product-explode.mp4", "data-tl-explode"]),
     ]
     extra_fail = 0
     for path, needles in extra_checks:
@@ -129,6 +135,14 @@ def main() -> int:
             print(f"  CONTENT FAIL {path}: {missing_n}")
         else:
             print(f"  CONTENT OK {path}")
+    for path, needles in absent_checks:
+        _, _, body = fetch(path)
+        present = [n for n in needles if n in body]
+        if present:
+            extra_fail += 1
+            print(f"  CONTENT FAIL {path} still has explode: {present}")
+        else:
+            print(f"  CONTENT OK {path} no explode")
 
     news_list, _, news_body = fetch("/news/")
     if "qiangli" in news_body.lower() or "9thpanel" in news_body.lower():

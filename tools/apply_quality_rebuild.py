@@ -48,6 +48,46 @@ for _s in SERIES:
         for i, (t, d, *_rest) in enumerate(_s["feats"], start=1)
     ]
 
+# Die-cast cabinet explode video — indoor/rental cabinets only (not film/mesh/DOOH/P/V).
+EXPLODE_SLUGS = frozenset({
+    "indoor-q-series",
+    "q-mini-series",
+    "nc-series",
+    "pdc-series",
+    "indoor-r-series",
+    "cs-series",
+    "n-series",
+    "mk-series",
+    "qm-series",
+    "rw-series",
+    "cg-series",
+    "ln-series",
+    "dm-series",
+    "pm-series",
+})
+EXPLODE_JS = "/public/wwwroot/js/tl-pdp.js?v=1.0.3"
+
+
+def explode_section(caption: str) -> str:
+    return f"""
+  <section class="tl-pdp-explode" data-tl-explode aria-label="Kabin açılımı">
+    <div class="tl-pdp-explode-pin">
+      <video class="tl-pdp-explode-video" muted playsinline webkit-playsinline preload="auto"
+        disablepictureinpicture controlslist="nodownload noplaybackrate noremoteplayback"
+        poster="/public/wwwroot/media/product-explode.jpg"
+        src="/public/wwwroot/media/product-explode.mp4?v=2"></video>
+      <div class="tl-pdp-explode-caption">
+        <span>Kaydırarak açın</span>
+        <strong>{caption}</strong>
+      </div>
+    </div>
+  </section>
+"""
+
+
+def explode_script() -> str:
+    return f'<script src="{EXPLODE_JS}" defer></script>'
+
 CASES = [
     dict(id="ist-otel", title="İstanbul otel lobisi", city="İstanbul", cat="indoor", img=f"{M}/indoor-corporate-lobby-3c5ebf5e.jpg", product="İç Mekan Q 1.8", area="32 m²", text="5 yıldızlı otel karşılama duvarı. Fine pitch, gündüz lobisinde okunur içerik."),
     dict(id="ist-showroom", title="Şişli showroom duvarı", city="İstanbul", cat="indoor", img=f"{M}/showroom-istanbul.webp", product="Q Mini 1.5", area="18 m²", text="LEDAJANS showroom ana duvarı. Müşteri keşif toplantılarında canlı demo."),
@@ -230,51 +270,9 @@ def shell_from(sample: Path) -> str:
 
 
 def series_main(s: dict) -> str:
-    gallery = "".join(
-        f'<div class="swiper-slide"><a class="product-swiper-i" href="{img}">'
-        f'<img src="{img}" alt="{s["title"]}"></a></div>'
-        for img in s["g"]
-    )
-    feats = []
-    for i, (h, p, img) in enumerate(s["feats"]):
-        side = "fadel" if i % 2 == 0 else "fader"
-        feats.append(
-            f'<div class="product-model1"><div class="row"><div class="row-i">'
-            f'<div class="product-model1-left" hsm="{side}"><div class="product-model1-title items-center">'
-            f'<span></span><p class="t1"><strong>{h}</strong></p></div>'
-            f'<div class="product-model1-info">{p}</div></div>'
-            f'<div class="product-model1-right img-scale"><img src="{img}" alt="{h}"></div>'
-            f"</div></div></div>"
-        )
-    specs = "".join(f"<div><span>{k}</span><strong>{v}</strong></div>" for k, v in s["specs"])
-    return f"""
-{crumbs([("/products/", "Ürünler"), (s["catu"], s["catn"]), ("", s["title"])])}
-<div class="product-b">
-  <div class="product-b-top ov">
-    <div class="product-b-top-info hsms">
-      <h1 class="t1" hsm="fadeup">{s["title"]}</h1>
-      <div class="swiper product-swiper" hsm="fadeup">
-        <div class="swiper-wrapper" uk-lightbox>{gallery}</div>
-        <div class="swiper-pagination"></div>
-      </div>
-      <div class="t2" hsm="fadeup"><p>{s["lead"]}</p>
-      <p>Piksel aralığı: {s["pitch"]}</p></div>
-    </div>
-  </div>
-  <div class="product-b-type"><div class="row hsms">
-    <a class="product-b-type-i cur" href="#i1" data-offset="220" uk-scroll>Tanıtım</a>
-    <a class="product-b-type-i" href="#i2" data-offset="220" uk-scroll>Teknik Özellikler</a>
-  </div></div>
-  <div class="product-model1" style="padding-bottom:0"><div class="row">
-    <h3 class="product-title" id="i1">Tanıtım</h3></div></div>
-  {"".join(feats)}
-  <div class="product-model6"><div class="row">
-    <h3 class="product-title" id="i2">Teknik Özellikler</h3>
-    <div class="tl-spec-grid">{specs}</div>
-  </div></div>
-  {quote(s["title"] + " için keşif ve teklif alın.")}
-</div>
-"""
+    from enrich_content import series_main as _series_main
+
+    return _series_main(s)
 
 
 def cat_main(title: str, intro: str, img: str, crumbs_i, series_list, tabs) -> str:
@@ -396,7 +394,7 @@ HOMESWIPER = f"""
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <div class="home-swiper-b">
-                        <video class="home-swiper-video" autoplay muted loop playsinline poster="{M}/hero-indoor-led.jpg">
+                        <video class="home-swiper-video" muted loop playsinline webkit-playsinline preload="auto" poster="{M}/hero-indoor-led.jpg">
                             <source src="/public/wwwroot/video/hero-indoor.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -412,7 +410,7 @@ HOMESWIPER = f"""
                 </div>
                 <div class="swiper-slide">
                     <div class="home-swiper-b">
-                        <video class="home-swiper-video" autoplay muted loop playsinline poster="{M}/hero-rental-stage.jpg">
+                        <video class="home-swiper-video" muted loop playsinline webkit-playsinline preload="metadata" poster="{M}/hero-rental-stage.jpg">
                             <source src="/public/wwwroot/video/hero-rental.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -473,15 +471,17 @@ HOMESWIPER = f"""
         </div>
 """
 
+HOME_EXPLODE = explode_section("Die-cast LED kabin") + "        " + explode_script() + "\n"
+SWIPER_RE = re.compile(
+    r'<div class="swiper home-swiper">.*?<a class="swiper-bottom-btn slide-animation" href="#i1".*?</a>\s*</div>'
+    r'(?:\s*<section class="tl-pdp-explode".*?</section>)?'
+    r'(?:\s*<script src="/public/wwwroot/js/tl-pdp\.js[^"]*" defer></script>)?',
+    re.S,
+)
+
 
 def patch_homepage(html: str) -> str:
-    html = re.sub(
-        r'<div class="swiper home-swiper">.*?<a class="swiper-bottom-btn slide-animation" href="#i1".*?</a>\s*</div>',
-        HOMESWIPER,
-        html,
-        count=1,
-        flags=re.S,
-    )
+    html = SWIPER_RE.sub(HOMESWIPER.rstrip() + "\n" + HOME_EXPLODE, html, count=1)
     html = html.replace(
         '<img src="/public/wwwroot/media/c160a43072ba.jpg" alt="">',
         f'<img src="{M}/hero-indoor-led.jpg" alt="Toeled kurumsal video">',

@@ -31,9 +31,18 @@
 <link rel="stylesheet" href="/public/wwwroot/css/plugin.css">
 <link rel="stylesheet" href="/public/wwwroot/css/layout.css?v=1.0.1">
 <link rel="stylesheet" href="/public/wwwroot/css/style.css?v=1.0.0">
-<link rel="stylesheet" href="/public/wwwroot/css/motion.css?v=1.1.17">
-<link rel="stylesheet" href="/public/wwwroot/css/toeled-theme.css?v=2.3.0">
+<link rel="stylesheet" href="/public/wwwroot/css/motion.css?v=1.1.18">
+<link rel="stylesheet" href="/public/wwwroot/css/toeled-theme.css?v=2.4.0">
 <link rel="stylesheet" href="/public/wwwroot/css/swiper-bundle.min.css">
+
+
+
+
+
+
+
+
+
 
 
 
@@ -348,11 +357,12 @@
         <link href="/public/wwwroot/plugin/map/main.css?v=1peatjp2w" type="text/css" rel="stylesheet">
         <link href="/public/wwwroot/plugin/map/media.css?v=o1easyrqs" rel="stylesheet" type="text/css">
         
+        
         <div class="swiper home-swiper">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <div class="home-swiper-b">
-                        <video class="home-swiper-video" autoplay muted loop playsinline poster="/public/wwwroot/media/hero-indoor-led.jpg">
+                        <video class="home-swiper-video" muted loop playsinline webkit-playsinline preload="auto" poster="/public/wwwroot/media/hero-indoor-led.jpg">
                             <source src="/public/wwwroot/video/hero-indoor.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -368,7 +378,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="home-swiper-b">
-                        <video class="home-swiper-video" autoplay muted loop playsinline poster="/public/wwwroot/media/hero-rental-stage.jpg">
+                        <video class="home-swiper-video" muted loop playsinline webkit-playsinline preload="metadata" poster="/public/wwwroot/media/hero-rental-stage.jpg">
                             <source src="/public/wwwroot/video/hero-rental.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -427,6 +437,21 @@
                 <img src="/public/wwwroot/images/home_199.png" alt="">
             </a>
         </div>
+
+  <section class="tl-pdp-explode" data-tl-explode aria-label="Kabin açılımı">
+    <div class="tl-pdp-explode-pin">
+      <video class="tl-pdp-explode-video" muted playsinline webkit-playsinline preload="auto"
+        disablepictureinpicture controlslist="nodownload noplaybackrate noremoteplayback"
+        poster="/public/wwwroot/media/product-explode.jpg"
+        src="/public/wwwroot/media/product-explode.mp4?v=2"></video>
+      <div class="tl-pdp-explode-caption">
+        <span>Kaydırarak açın</span>
+        <strong>Die-cast LED kabin</strong>
+      </div>
+    </div>
+  </section>
+        <script src="/public/wwwroot/js/tl-pdp.js?v=1.0.3" defer></script>
+
 
         <div class="home-model1 template1080" id="i1">
             <div class="content-wrap public-tobody ">
@@ -1559,35 +1584,41 @@
                 delay: 7000,
                 disableOnInteraction: false,
             },
-            speed: 1500,
+            speed: 900,
             loop: true,
+            effect: "fade",
+            fadeEffect: { crossFade: true },
+            watchSlidesProgress: false,
             grabCursor: true,
-            watchSlidesProgress: true,
-            mousewheelControl: true,
-            keyboardControl: true,
             navigation: {
                 nextEl: ".home-swiper-next",
                 prevEl: ".home-swiper-prev"
             },
-            // pagination: {
-            //     el: ".swiper-pagination",
-            //     clickable: true,
-            // },
-
             pagination: {
                 el: ".home-swiper .swiper-pagination",
                 clickable: true,
             },
             on: {
-                slideChangeTransitionEnd: function() {
+                init: function () {
+                    syncHomeHeroMedia(this);
+                },
+                slideChangeTransitionEnd: function () {
                     $(".swiper-pagination-icon .swiper-pagination-bullet-active").addClass("on").siblings()
                         .removeClass("on");
-                    document.querySelectorAll(".home-swiper-video").forEach(function (v) { v.pause(); });
-                    var active = document.querySelector(".home-swiper .swiper-slide-active .home-swiper-video");
-                    if (active) { active.play(); }
+                    syncHomeHeroMedia(this);
                 },
             }
         });
+        function syncHomeHeroMedia(swiper) {
+            var root = swiper && swiper.el ? swiper.el : document.querySelector(".home-swiper");
+            if (!root) return;
+            root.querySelectorAll(".home-swiper-video").forEach(function (v) { v.pause(); });
+            var active = root.querySelector(".swiper-slide-active .home-swiper-video");
+            if (active) {
+                var play = active.play();
+                if (play && play.catch) play.catch(function () {});
+            }
+        }
     </script>
     <script>
         function syncDealerHighlight(i) {
