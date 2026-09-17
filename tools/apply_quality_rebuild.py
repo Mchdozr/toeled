@@ -75,7 +75,7 @@ def explode_section(caption: str) -> str:
       <video class="tl-pdp-explode-video" muted playsinline webkit-playsinline preload="auto"
         disablepictureinpicture controlslist="nodownload noplaybackrate noremoteplayback"
         poster="/public/wwwroot/media/product-explode.jpg"
-        src="/public/wwwroot/media/product-explode.mp4?v=2"></video>
+        src="/public/wwwroot/media/product-explode.mp4?v=3"></video>
       <div class="tl-pdp-explode-caption">
         <span>Kaydırarak açın</span>
         <strong>{caption}</strong>
