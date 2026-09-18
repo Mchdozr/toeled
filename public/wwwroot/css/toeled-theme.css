@@ -1286,3 +1286,39 @@ dialog.tl-case-modal::backdrop {
     height: min(62vh, 560px);
   }
 }
+
+.service-b .model1 .model1-i {
+  overflow: hidden;
+  align-items: stretch !important;
+}
+
+.service-b .model1 .model1-i .right {
+  min-height: 260px;
+}
+
+.service-b .model1 .model1-i .right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.model1-info-list-i-con > .t1,
+.model1-info-list-i-con > .t2 {
+  text-align: center;
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+.service-b .model2 .row > .t1,
+.service-b .model4 .row > .t1,
+.service-b .model5 .row > .t1 {
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.service-b .model5-list-i {
+  text-decoration: none;
+  color: inherit;
+}
